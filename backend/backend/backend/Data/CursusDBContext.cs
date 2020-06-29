@@ -14,6 +14,6 @@ namespace backend.Data
             return new CursusDBContext();
         }
 
-        public DbSet<Cursus> SugarLevels { get; set; }
+        public DbSet<Cursus> Cursussen { get; set; }
     }
 }
