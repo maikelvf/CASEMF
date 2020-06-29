@@ -1,16 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { MatTableModule } from '@angular/material/table';
 
 import { AppComponent } from './app.component';
-import { CursusoverzichtComponent } from './cursusoverzicht/cursusoverzicht.component';
+import { CursusListComponent } from './cursus-list/cursus-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CursusoverzichtComponent
+    CursusListComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

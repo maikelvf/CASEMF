@@ -210,6 +210,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\CursusController.cs" />
+    <Compile Include="Controllers\CursusinstantiesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Data\CursusDBContext.cs" />
@@ -219,6 +220,14 @@
     <Compile Include="Migrations\202006290956195_initialcreate.cs" />
     <Compile Include="Migrations\202006290956195_initialcreate.Designer.cs">
       <DependentUpon>202006290956195_initialcreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006291139190_foreignkeys-added.cs" />
+    <Compile Include="Migrations\202006291139190_foreignkeys-added.Designer.cs">
+      <DependentUpon>202006291139190_foreignkeys-added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006291318069_navigation-properties.cs" />
+    <Compile Include="Migrations\202006291318069_navigation-properties.Designer.cs">
+      <DependentUpon>202006291318069_navigation-properties.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cursus.cs" />
@@ -311,6 +320,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202006290956195_initialcreate.resx">
       <DependentUpon>202006290956195_initialcreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006291139190_foreignkeys-added.resx">
+      <DependentUpon>202006291139190_foreignkeys-added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006291318069_navigation-properties.resx">
+      <DependentUpon>202006291318069_navigation-properties.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

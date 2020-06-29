@@ -5,5 +5,7 @@
         public int Id { get; set; }
 
         public string Startdatum { get; set; }
+
+        public virtual Cursus Cursus { get; set; }
     }
 }

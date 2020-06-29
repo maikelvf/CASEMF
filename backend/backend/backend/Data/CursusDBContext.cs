@@ -7,6 +7,7 @@ namespace backend.Data
     {
         public CursusDBContext() : base ("CursusDB")
         {
+            Configuration.ProxyCreationEnabled = false;
         }
 
         public static CursusDBContext Create()
@@ -15,5 +16,7 @@ namespace backend.Data
         }
 
         public DbSet<Cursus> Cursussen { get; set; }
+
+        public DbSet<Cursusinstantie> Cursusinstanties { get; set; }
     }
 }

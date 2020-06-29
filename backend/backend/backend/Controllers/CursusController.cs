@@ -14,10 +14,19 @@ namespace backend.Controllers
     {
         private CursusDBContext db = new CursusDBContext();
 
+        public CursusController()
+        {
+        }
+
+        public CursusController(CursusDBContext context)
+        {
+            db = context;
+        }
+
         // GET: api/Cursus
         public IQueryable<Cursus> GetCursussen()
         {
-            return db.Cursussen;
+            return db.Cursussen.Include(c => c.Cursusinstanties);
         }
 
         // GET: api/Cursus/5

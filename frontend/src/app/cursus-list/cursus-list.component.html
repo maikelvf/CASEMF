@@ -1,0 +1,34 @@
+<h3>Cursuslijst</h3>
+
+<!-- <table>
+    <th>Startdatum</th>
+    <th>Duur</th>
+    <th>Titel</th>
+
+    <tr *ngFor="let instantie of cursusinstanties">
+        <td>{{instantie.startdatum}}</td>
+        <td>{{instantie.cursus.duur}}</td>
+        <td>{{instantie.cursus.titel}}</td>
+    </tr>
+</table> -->
+
+
+<mat-table [dataSource]="cursusinstanties">
+    <ng-container matColumnDef="startdatum">
+        <mat-header-cell *matHeaderCellDef> Startdatum </mat-header-cell>
+        <mat-cell *matCellDef="let instantie"> {{instantie.startdatum}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="duur">
+        <mat-header-cell *matHeaderCellDef> Duur </mat-header-cell>
+        <mat-cell *matCellDef="let instantie"> {{instantie.cursus.duur}} </mat-cell>>
+    </ng-container>
+
+    <ng-container matColumnDef="titel">
+        <mat-header-cell *matHeaderCellDef> Titel </mat-header-cell>
+        <mat-cell *matCellDef="let instantie"> {{instantie.cursus.titel}} </mat-cell>>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+    <mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></mat-row>
+</mat-table>

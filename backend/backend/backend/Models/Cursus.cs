@@ -1,4 +1,6 @@
-﻿namespace backend.Models
+﻿using System.Collections.Generic;
+
+namespace backend.Models
 {
     public class Cursus
     {
@@ -9,5 +11,7 @@
         public string Titel { get; set; }
 
         public string Code { get; set; }
+
+        public virtual ICollection<Cursusinstantie> Cursusinstanties { get; set; }
     }
 }

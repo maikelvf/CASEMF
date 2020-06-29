@@ -119,3 +119,5 @@ D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend\obj\Debug\backend.dll
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend\obj\Debug\backend.pdb
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend\obj\Debug\backend.Migrations.initialcreate.resources
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend\obj\Debug\backend.csproj.GenerateResource.cache
+D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend\obj\Debug\backend.Migrations.foreignkeysadded.resources
+D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend\obj\Debug\backend.Migrations.navigationproperties.resources

@@ -44,3 +44,16 @@ D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\obj\Debug\backe
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\obj\Debug\backend.Tests.csproj.CopyComplete
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\obj\Debug\backend.Tests.dll
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\obj\Debug\backend.Tests.pdb
+D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\System.Web.Http.Cors.dll
+D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\System.Web.Cors.dll
+D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\System.Web.Http.Cors.xml
+D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\Castle.Core.dll
+D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\EntityFramework.SqlServer.dll
+D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\Moq.dll
+D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\System.Threading.Tasks.Extensions.dll
+D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\Castle.Core.xml
+D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\EntityFramework.SqlServer.xml
+D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\Moq.xml
+D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\System.Threading.Tasks.Extensions.xml
