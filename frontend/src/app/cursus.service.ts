@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { Cursus } from './models/cursus';
 import { Cursusinstantie } from './models/cursusinstantie';
 
@@ -8,9 +9,10 @@ import { Cursusinstantie } from './models/cursusinstantie';
   providedIn: 'root'
 })
 export default class CursusService {
-  public api = 'http://localhost:8080/api';
-  public cursus_api = `${this.api}/cursus`;
-  public cursusinstantie_api = `${this.api}/cursusinstantie`
+  private api = 'http://localhost:8080/api';
+  private cursus_api = `${this.api}/cursus`;
+  private cursusinstantie_api = `${this.api}/cursusinstantie`
+  private cursustoevoegen_api = `${this.api}/toevoegen`
 
   constructor(private http: HttpClient) {}
 
@@ -26,17 +28,21 @@ export default class CursusService {
     return this.http.get(`${this.cursus_api}/${id}`);
   }
 
-  save(cursus: Cursus): Observable<Cursus> {
-    let result: Observable<Cursus>;
-    if (cursus.Id) {
-      result = this.http.put<Cursus>(
-        `${this.cursus_api}/${cursus.Id}`,
-        cursus
-      );
-    } else {
-      result = this.http.post<Cursus>(this.cursus_api, cursus);
-    }
-    return result;
+  postFile(fileToUpload: File): Observable<boolean> {
+    const url = this.cursustoevoegen_api;
+    const data: FormData = new FormData();
+
+    data.append('fileKey', fileToUpload, fileToUpload.name);
+
+    return this.http.post(url, data)
+      .pipe(
+        map((response: any) => response),
+        catchError(<T>(error: any, result?: T) => {
+          console.log(error);
+          alert(error.statusText);
+          return of(result as T);
+        }));
+        
   }
 
   remove(id: number) {

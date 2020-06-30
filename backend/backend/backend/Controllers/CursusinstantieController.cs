@@ -1,11 +1,15 @@
 ﻿using backend.Data;
+using backend.HelperClasses;
 using backend.Models;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -30,84 +34,85 @@ namespace backend.Controllers
             return db.Cursusinstanties.Include(c => c.Cursus);
         }
 
-        // GET: api/Cursusinstanties/5
-        [ResponseType(typeof(Cursusinstantie))]
-        public async Task<IHttpActionResult> GetCursusinstantie(int id)
+        //// GET: api/Cursusinstantie/5
+        //[ResponseType(typeof(Cursusinstantie))]
+        //public async Task<IHttpActionResult> GetCursusinstantie(int id)
+        //{
+        //    Cursusinstantie cursusinstantie = await db.Cursusinstanties.FindAsync(id);
+        //    if (cursusinstantie == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return Ok(cursusinstantie);
+        //}
+
+        //// PUT: api/Cursusinstantie/5
+        //[ResponseType(typeof(void))]
+        //public async Task<IHttpActionResult> PutCursusinstantie(int id, Cursusinstantie cursusinstantie)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    if (id != cursusinstantie.Id)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    db.Entry(cursusinstantie).State = EntityState.Modified;
+
+        //    try
+        //    {
+        //        await db.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!CursusinstantieExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
+
+        [Route("api/toevoegen")]
+        [HttpPost]
+        public HttpResponseMessage PostCursusinstanties()
         {
-            Cursusinstantie cursusinstantie = await db.Cursusinstanties.FindAsync(id);
-            if (cursusinstantie == null)
+            var httpRequest = HttpContext.Current.Request;
+            if (httpRequest.Files.Count < 1)
             {
-                return NotFound();
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
-            return Ok(cursusinstantie);
+            var file = httpRequest.Files[0];
+            FileHelper.AddCursussenFromFileToDatabase(file, db);
+
+            return Request.CreateResponse(HttpStatusCode.Created, "cursussen toegevoegd!");
         }
 
-        // PUT: api/Cursusinstanties/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutCursusinstantie(int id, Cursusinstantie cursusinstantie)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// DELETE: api/Cursusinstantie/5
+        //[ResponseType(typeof(Cursusinstantie))]
+        //public async Task<IHttpActionResult> DeleteCursusinstantie(int id)
+        //{
+        //    Cursusinstantie cursusinstantie = await db.Cursusinstanties.FindAsync(id);
+        //    if (cursusinstantie == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (id != cursusinstantie.Id)
-            {
-                return BadRequest();
-            }
+        //    db.Cursusinstanties.Remove(cursusinstantie);
+        //    await db.SaveChangesAsync();
 
-            db.Entry(cursusinstantie).State = EntityState.Modified;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CursusinstantieExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/Cursusinstanties
-        [ResponseType(typeof(Cursusinstantie))]
-        public async Task<IHttpActionResult> PostCursusinstantie(Cursusinstantie cursusinstantie)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Cursusinstanties.Add(cursusinstantie);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = cursusinstantie.Id }, cursusinstantie);
-        }
-
-        // DELETE: api/Cursusinstanties/5
-        [ResponseType(typeof(Cursusinstantie))]
-        public async Task<IHttpActionResult> DeleteCursusinstantie(int id)
-        {
-            Cursusinstantie cursusinstantie = await db.Cursusinstanties.FindAsync(id);
-            if (cursusinstantie == null)
-            {
-                return NotFound();
-            }
-
-            db.Cursusinstanties.Remove(cursusinstantie);
-            await db.SaveChangesAsync();
-
-            return Ok(cursusinstantie);
-        }
+        //    return Ok(cursusinstantie);
+        //}
 
         protected override void Dispose(bool disposing)
         {

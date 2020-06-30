@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import CursusService from '../cursus.service';
 
 @Component({
   selector: 'app-cursustoevoegen',
@@ -7,7 +8,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CursustoevoegenComponent implements OnInit {
 
-  constructor() { }
+  fileToUpload: File = null;
+
+  constructor(private cursusService : CursusService) { }
+
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
+  }
+
+  uploadFile() {
+    if (this.fileToUpload == null) {
+      alert('Kies een bestand om te uploaden!');
+      return;
+    }
+    this.cursusService.postFile(this.fileToUpload).subscribe(data => {
+      // Probeert te uploaden
+      }, error => {
+        console.log(error);
+    });
+  }
 
   ngOnInit(): void {
   }

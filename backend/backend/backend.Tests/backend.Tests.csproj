@@ -118,6 +118,8 @@
   <ItemGroup>
     <Compile Include="Controllers\CursusinstantieControllerTests.cs" />
     <Compile Include="Controllers\CursusControllerTests.cs" />
+    <Compile Include="HelperClasses\FileHelperTests\ExtractMethodTests.cs" />
+    <Compile Include="HelperClasses\FileHelperTests\ReadFromFileTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +134,7 @@
       <Name>backend</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

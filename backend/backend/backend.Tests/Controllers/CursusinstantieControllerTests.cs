@@ -44,6 +44,11 @@ namespace backend.Tests.Controllers
             _controller = new CursusinstantieController(_contextMock.Object);
             var actualResult = _controller.GetCursusinstanties();
             CollectionAssert.AreEqual(expectedResult.ToList(), actualResult.ToList());
+        }
+
+        [TestMethod]
+        public void PostCursusinstanties_ReturnsSuccesResponse()
+        {
 
         }
 

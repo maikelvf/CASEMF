@@ -1,1 +1,9 @@
-<p>cursustoevoegen works!</p>
+<h3>Cursussen toevoegen</h3>
+
+<div class="form-group">
+    <label for="file">Bestand:</label>
+    <input type="file"
+           id="file"
+           (change)="handleFileInput($event.target.files)">
+</div>
+<button (click)="uploadFile()">Toevoegen</button>
