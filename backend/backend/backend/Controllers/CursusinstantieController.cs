@@ -89,13 +89,14 @@ namespace backend.Controllers
             var httpRequest = HttpContext.Current.Request;
             if (httpRequest.Files.Count < 1)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Er ging iets mis!");
             }
 
             var file = httpRequest.Files[0];
+
             FileHelper.AddCursussenFromFileToDatabase(file, db);
 
-            return Request.CreateResponse(HttpStatusCode.Created, "cursussen toegevoegd!");
+            return Request.CreateResponse(HttpStatusCode.Created, FileHelper.ReturnMessage());
         }
 
         //// DELETE: api/Cursusinstantie/5

@@ -13,7 +13,7 @@ namespace backend.Tests.HelperClasses.FileHelperTests
         [ClassInitialize]
         public static void ClassInitialize(TestContext _testContext)
         {
-            _linesFromFile = new string[]
+            FileHelper.fileContent = new string[]
             {
                 "Titel: C# Programmeren",
                 "Cursuscode: CNETIN",
@@ -31,7 +31,7 @@ namespace backend.Tests.HelperClasses.FileHelperTests
         {
             var expectedResult = 2;
 
-            var actualResult = FileHelper.ExtractDuur(_linesFromFile, 4);
+            var actualResult = FileHelper.ExtractDuur(4);
 
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -41,7 +41,7 @@ namespace backend.Tests.HelperClasses.FileHelperTests
         {
             var expectedResult = "CNETIN";
 
-            var actualResult = FileHelper.ExtractCode(_linesFromFile, 0);
+            var actualResult = FileHelper.ExtractCode(0);
 
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -51,7 +51,7 @@ namespace backend.Tests.HelperClasses.FileHelperTests
         {
             var expectedResult = "Java Persistence API";
 
-            var actualResult = FileHelper.ExtractTitel(_linesFromFile, 4);
+            var actualResult = FileHelper.ExtractTitel(4);
 
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -61,7 +61,7 @@ namespace backend.Tests.HelperClasses.FileHelperTests
         {
             var expectedResult = new DateTime(2018, 10, 8);
 
-            var actualResult = FileHelper.ExtractStartdatum(_linesFromFile, 0);
+            var actualResult = FileHelper.ExtractStartdatum(0);
 
             Assert.AreEqual(expectedResult, actualResult);
         }

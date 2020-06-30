@@ -10,12 +10,11 @@ namespace backend.Tests.HelperClasses.FileHelperTests
     public class ReadFromFileTests
     {
         private static TestContext _testContext;
-        private static string[] _linesFromFile;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext _testContext)
         {
-            _linesFromFile = new string[]
+            FileHelper.fileContent = new string[]
             {
                 "Titel: C# Programmeren",
                 "Cursuscode: CNETIN",
@@ -38,7 +37,7 @@ namespace backend.Tests.HelperClasses.FileHelperTests
                 Duur = 5
             };
 
-            var actualResult = FileHelper.GetCursus(_linesFromFile, 0);
+            var actualResult = FileHelper.GetCursus(0);
 
             Assert.AreEqual(expectedResult.Titel, actualResult.Titel);
             Assert.AreEqual(expectedResult.Code, actualResult.Code);
@@ -61,7 +60,7 @@ namespace backend.Tests.HelperClasses.FileHelperTests
                 Startdatum = new DateTime(2018, 10, 15)
             };
 
-            var actualResult = FileHelper.GetCursusinstantie(_linesFromFile, 4, cursus);
+            var actualResult = FileHelper.GetCursusinstantie(4);
 
             Assert.AreEqual(expectedResult.Cursus, actualResult.Cursus);
             Assert.AreEqual(expectedResult.Startdatum, actualResult.Startdatum);

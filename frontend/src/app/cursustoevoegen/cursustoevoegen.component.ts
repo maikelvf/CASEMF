@@ -10,6 +10,8 @@ export class CursustoevoegenComponent implements OnInit {
 
   fileToUpload: File = null;
 
+  public response;
+
   constructor(private cursusService : CursusService) { }
 
   handleFileInput(files: FileList) {
@@ -22,7 +24,7 @@ export class CursustoevoegenComponent implements OnInit {
       return;
     }
     this.cursusService.postFile(this.fileToUpload).subscribe(data => {
-      // Probeert te uploaden
+      this.response = data
       }, error => {
         console.log(error);
     });

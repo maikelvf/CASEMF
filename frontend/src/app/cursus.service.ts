@@ -28,22 +28,23 @@ export default class CursusService {
     return this.http.get(`${this.cursus_api}/${id}`);
   }
 
-  postFile(fileToUpload: File): Observable<boolean> {
+  postFile(fileToUpload: File) {
     const url = this.cursustoevoegen_api;
     const data: FormData = new FormData();
 
     data.append('fileKey', fileToUpload, fileToUpload.name);
 
-    return this.http.post(url, data)
-      .pipe(
-        map((response: any) => response),
-        catchError(<T>(error: any, result?: T) => {
-          console.log(error);
-          alert(error.statusText);
-          return of(result as T);
-        }));
-        
+    return this.http.post(url, data);
+    
+      // .pipe(
+      //   map((response: any) => response),
+      //   catchError(<T>(error: any, result?: T) => {
+      //     console.log(error);
+      //     alert(error.statusText);
+      //     return of(result as T);
+      //   }));
   }
+
 
   remove(id: number) {
     return this.http.delete(`${this.cursus_api}/${id.toString()}`);
