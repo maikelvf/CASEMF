@@ -121,3 +121,4 @@ D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend\obj\Debug\backend.Mig
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend\obj\Debug\backend.csproj.GenerateResource.cache
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend\obj\Debug\backend.Migrations.foreignkeysadded.resources
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend\obj\Debug\backend.Migrations.navigationproperties.resources
+D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend\obj\Debug\backend.Migrations.startdatumdatetime.resources

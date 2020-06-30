@@ -7,13 +7,16 @@ using backend.Models;
 using System.Data.Entity;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+using System;
 
 namespace backend.Tests.Controllers
 {
     [TestClass]
-    public class CursusControllerTests
+    public class CursusinstantieControllerTests
     {
-        private CursusController _controller;
+        private CursusinstantieController _controller;
         private Mock<CursusDBContext> _contextMock;
 
         [TestInitialize]
@@ -22,24 +25,26 @@ namespace backend.Tests.Controllers
         }
 
         [TestMethod]
-        public void GetCursussen_ReturnsAllCursussen()
+        public void GetCursusinstanties_ReturnsAllCursusinstanties()
         {
-            var expectedResult = new List<Cursus>
+            var cursus = new Cursus { Id = 1, Code = "abc", Duur = 2, Titel = "Cursus 10" };
+
+            var expectedResult = new List<Cursusinstantie>
                 {
-                    new Cursus { Id = 1, Code = "abc", Duur = 2, Titel = "Cursus 10" },
-                    new Cursus { Id = 2, Code = "def", Duur = 5, Titel = "Cursus 20" },
-                    new Cursus { Id = 3, Code = "ghi", Duur = 1, Titel = "Cursus 30" },
-            }.AsQueryable();
+                    new Cursusinstantie { Id = 1, Startdatum = new DateTime(2020, 01, 01).Date, Cursus = cursus},
+                    new Cursusinstantie { Id = 2, Startdatum = new DateTime(2020, 11, 11).Date, Cursus = cursus},
+                }.AsQueryable();
 
             var mockDbSet = GetMockDbSet(expectedResult);
-            mockDbSet.Setup(m => m.Include("Cursusinstanties")).Returns(mockDbSet.Object);
+            mockDbSet.Setup(m => m.Include("Cursus")).Returns(mockDbSet.Object);
 
             _contextMock = new Mock<CursusDBContext>();
-            _contextMock.Setup(m => m.Cursussen).Returns(mockDbSet.Object);
+            _contextMock.Setup(m => m.Cursusinstanties).Returns(mockDbSet.Object);
 
-            _controller = new CursusController(_contextMock.Object);
-            var actualResult = _controller.GetCursussen();
+            _controller = new CursusinstantieController(_contextMock.Object);
+            var actualResult = _controller.GetCursusinstanties();
             CollectionAssert.AreEqual(expectedResult.ToList(), actualResult.ToList());
+
         }
 
         private Mock<DbSet<T>> GetMockDbSet<T>(IQueryable<T> entities) where T : class

@@ -18,10 +18,7 @@ D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\Syste
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\System.Web.WebPages.Deployment.dll
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\System.Web.WebPages.dll
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\System.Web.WebPages.Razor.dll
-D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\System.Web.Optimization.dll
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\EntityFramework.dll
-D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\WebGrease.dll
-D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\Antlr3.Runtime.dll
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\backend.pdb
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\backend.dll.config
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
@@ -36,9 +33,7 @@ D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\Syste
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\System.Web.WebPages.xml
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\System.Web.WebPages.Razor.xml
-D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\System.Web.Optimization.xml
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\EntityFramework.xml
-D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\Antlr3.Runtime.pdb
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\obj\Debug\backend.Tests.csprojAssemblyReference.cache
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\obj\Debug\backend.Tests.csproj.CoreCompileInputs.cache
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\obj\Debug\backend.Tests.csproj.CopyComplete

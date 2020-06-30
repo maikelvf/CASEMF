@@ -15,8 +15,8 @@ namespace backend.Data
             return new CursusDBContext();
         }
 
-        public DbSet<Cursus> Cursussen { get; set; }
+        public virtual DbSet<Cursus> Cursussen { get; set; }
 
-        public DbSet<Cursusinstantie> Cursusinstanties { get; set; }
+        public virtual DbSet<Cursusinstantie> Cursusinstanties { get; set; }
     }
 }
