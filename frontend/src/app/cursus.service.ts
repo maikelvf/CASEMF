@@ -10,7 +10,7 @@ import { Cursusinstantie } from './models/cursusinstantie';
 export default class CursusService {
   public api = 'http://localhost:8080/api';
   public cursus_api = `${this.api}/cursus`;
-  public cursusinstantie_api = `${this.api}/cursusinstanties`
+  public cursusinstantie_api = `${this.api}/cursusinstantie`
 
   constructor(private http: HttpClient) {}
 

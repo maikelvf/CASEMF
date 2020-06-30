@@ -1,22 +1,9 @@
-<h3>Cursuslijst</h3>
-
-<!-- <table>
-    <th>Startdatum</th>
-    <th>Duur</th>
-    <th>Titel</th>
-
-    <tr *ngFor="let instantie of cursusinstanties">
-        <td>{{instantie.startdatum}}</td>
-        <td>{{instantie.cursus.duur}}</td>
-        <td>{{instantie.cursus.titel}}</td>
-    </tr>
-</table> -->
-
+<h3>Overzicht</h3>
 
 <mat-table [dataSource]="cursusinstanties">
     <ng-container matColumnDef="startdatum">
         <mat-header-cell *matHeaderCellDef> Startdatum </mat-header-cell>
-        <mat-cell *matCellDef="let instantie"> {{instantie.startdatum}} </mat-cell>
+        <mat-cell *matCellDef="let instantie"> {{instantie.startdatum | date}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="duur">
