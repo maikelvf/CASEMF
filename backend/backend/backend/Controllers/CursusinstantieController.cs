@@ -87,16 +87,17 @@ namespace backend.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, "Er ging iets mis!");
             }
 
-            var file = httpRequest.Files[0];
+            var fileStream = httpRequest.Files[0].InputStream;
+
             var fileHelper = new FileHelper(db);
 
-            var validFileMessage = fileHelper.FileIsValid(file);
+            var validFileMessage = fileHelper.FileIsValid(fileStream);
             if (!validFileMessage.Equals("Ok"))
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, validFileMessage);
             }
 
-            fileHelper.AddCursussenFromFileToDatabase(file);
+            fileHelper.AddCursussenFromFileToDatabase(fileStream);
 
             return Request.CreateResponse(HttpStatusCode.Created, fileHelper.ReturnMessage());
         }

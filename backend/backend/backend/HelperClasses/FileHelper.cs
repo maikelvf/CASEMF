@@ -33,7 +33,7 @@ namespace backend.HelperClasses
             _extract = extract;
         }
 
-        public string FileIsValid(HttpPostedFile file)
+        public string FileIsValid(Stream file)
         {
             GetContentFromFile(file);
 
@@ -94,11 +94,11 @@ namespace backend.HelperClasses
             return "Ok";
         }
 
-        private void GetContentFromFile(HttpPostedFile file)
+        private void GetContentFromFile(Stream file)
         {
-            // IStream binnen krijgen ipv HttpPostedFile, dan kan vanuit de unit test ook een IStream mee worden gegeven.
+            // Stream binnen krijgen ipv HttpPostedFile, dan kan vanuit de unit test ook een Stream mee worden gegeven.
             string content;
-            using (StreamReader sr = new StreamReader(file.InputStream))
+            using (StreamReader sr = new StreamReader(file))
             {
                 content = sr.ReadToEnd();
             }
@@ -106,7 +106,7 @@ namespace backend.HelperClasses
             fileContent = SplitContentString(content);
         }
 
-        public void AddCursussenFromFileToDatabase(HttpPostedFile file)
+        public void AddCursussenFromFileToDatabase(Stream file)
         {
             InitializeCount();
 
