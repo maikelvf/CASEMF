@@ -1,11 +1,8 @@
 ﻿using backend.Data;
 using backend.Models;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Web;
 
 namespace backend.HelperClasses
 {
@@ -15,7 +12,7 @@ namespace backend.HelperClasses
 
         private ExtractHelper _extract;
 
-        public string[] fileContent;
+        private static string[] _fileContent;
 
         private int _cursusCount;
         private int _cursusinstantieCount;
@@ -33,84 +30,24 @@ namespace backend.HelperClasses
             _extract = extract;
         }
 
-        public string FileIsValid(Stream file)
+        public static string[] GetContentFromFile(Stream file)
         {
-            GetContentFromFile(file);
-
-            for (int lineNumber = 0; lineNumber < fileContent.Length - 1; lineNumber++)
-            {
-                Regex reg;
-                
-                switch (lineNumber % 5)
-                {
-                    case 0:
-                        // Regex voor "Titel: <titel>"
-                        reg = new Regex(@"^Titel:\s.+");
-                        if (!reg.IsMatch(fileContent[lineNumber]))
-                        {
-                            return $"Regel {lineNumber + 1} is niet in het juiste formaat, regel {lineNumber + 1} moet Titel zijn met formaat: 'Titel: <titel>'";
-                        }
-                        break;
-
-                    case 1:
-                        // Regex voor "Cursuscode: <code>"
-                        reg = new Regex(@"^Cursuscode:\s.+");
-                        if (!reg.IsMatch(fileContent[lineNumber]))
-                        {
-                            return $"Regel {lineNumber + 1} is niet in het juiste formaat, regel {lineNumber + 1} moet Cursuscode zijn met formaat: 'Cursuscode: <code>'";
-                        }
-                        break;
-
-                    case 2:
-                        // Regex voor "Duur: # dagen"
-                        reg = new Regex(@"^Duur:\s\d\sdagen");
-                        if (!reg.IsMatch(fileContent[lineNumber]))
-                        {
-                            return $"Regel {lineNumber + 1} is niet in het juiste formaat, regel {lineNumber + 1} moet Cursusduur zijn met formaat: 'Duur: # dagen'";
-                        }
-                        break;
-
-                    case 3:
-                        // Regex voor "Startdatum: ##/##/####"
-                        reg = new Regex(@"^Startdatum:\s\d{1,2}\/\d{1,2}\/\d{4}$");
-                        if (!reg.IsMatch(fileContent[lineNumber]))
-                        {
-                            return $"Regel {lineNumber + 1} is niet in het juiste formaat, regel {lineNumber + 1} moet Startdatum zijn met formaat: 'Startdatum: 01/01/2020'";
-                        }
-                        break;
-
-                    case 4:
-                        if (!string.IsNullOrEmpty(fileContent[lineNumber]))
-                        {
-                            return $"Regel {lineNumber + 1} is niet in het juiste formaat: Regel moet een witregel zijn";
-                        }
-                        break;
-
-                    default:
-                        return "Ok";
-                }
-            }
-
-            return "Ok";
-        }
-
-        private void GetContentFromFile(Stream file)
-        {
-            // Stream binnen krijgen ipv HttpPostedFile, dan kan vanuit de unit test ook een Stream mee worden gegeven.
-            string content;
+            string[] content;
             using (StreamReader sr = new StreamReader(file))
             {
-                content = sr.ReadToEnd();
+                content = sr.ReadToEnd().SplitContentString();
             }
 
-            fileContent = SplitContentString(content);
+            _fileContent = content;
+
+            return content;
         }
 
-        public void AddCursussenFromFileToDatabase(Stream file)
+        public void AddCursussenFromFileToDatabase()
         {
             InitializeCount();
 
-            _extract = new ExtractHelper(fileContent);
+            _extract = new ExtractHelper(_fileContent);
 
             try
             {
@@ -136,17 +73,11 @@ namespace backend.HelperClasses
             _duplicateCursusinstantieCount = 0;
         }
 
-        public string[] SplitContentString(string content)
-        {
-            var splitContent = content.Split(new [] { Environment.NewLine }, StringSplitOptions.None);
-            return splitContent;
-        }
-
         public List<Cursus> ReadAllCursussenFromFileContent()
         {
             var cursussen = new List<Cursus>();
 
-            for (int i = 0; i < fileContent.Length - 1; i += 5)
+            for (int i = 0; i < _fileContent.Length - 1; i += 5)
             {
                 Cursus cursus = GetCursus(i);
 
@@ -174,7 +105,7 @@ namespace backend.HelperClasses
         {
             var instanties = new List<Cursusinstantie>();
 
-            for (int i = 0; i < fileContent.Length - 1; i += 5)
+            for (int i = 0; i < _fileContent.Length - 1; i += 5)
             {
                 Cursusinstantie instantie = GetCursusinstantie(i);
                 bool newInstantie = IsNewInstantie(instanties, instantie);
@@ -235,7 +166,5 @@ namespace backend.HelperClasses
 
             return message;
         }
-
-
     }
 }

@@ -91,13 +91,13 @@ namespace backend.Controllers
 
             var fileHelper = new FileHelper(db);
 
-            var validFileMessage = fileHelper.FileIsValid(fileStream);
-            if (!validFileMessage.Equals("Ok"))
+            var validFileMessage = fileStream.FileIsValid();
+            if (!validFileMessage.Equals("Valid"))
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, validFileMessage);
             }
 
-            fileHelper.AddCursussenFromFileToDatabase(fileStream);
+            fileHelper.AddCursussenFromFileToDatabase();
 
             return Request.CreateResponse(HttpStatusCode.Created, fileHelper.ReturnMessage());
         }

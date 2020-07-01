@@ -188,7 +188,8 @@
     </Compile>
     <Compile Include="HelperClasses\ExtractHelper.cs" />
     <Compile Include="HelperClasses\FileHelper.cs" />
-    <Compile Include="HelperClasses\FileValidationHelper.cs" />
+    <Compile Include="HelperClasses\FileValidationExtensionMethods.cs" />
+    <Compile Include="HelperClasses\StringExtensionMethods.cs" />
     <Compile Include="Migrations\202006290956195_initialcreate.cs" />
     <Compile Include="Migrations\202006290956195_initialcreate.Designer.cs">
       <DependentUpon>202006290956195_initialcreate.cs</DependentUpon>
