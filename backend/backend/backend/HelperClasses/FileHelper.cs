@@ -32,7 +32,14 @@ namespace backend.HelperClasses
         {
             InitializeCount();
 
-            fileContent = ReadAllLinesFromFile(file);
+            string content;
+
+            using (StreamReader sr = new StreamReader(file.InputStream))
+            {
+                content = sr.ReadToEnd();
+            }
+
+            fileContent = SplitContentString(content);
 
             try
             {
@@ -58,11 +65,10 @@ namespace backend.HelperClasses
             _duplicateCursusinstantieCount = 0;
         }
 
-        public string[] ReadAllLinesFromFile(HttpPostedFile file)
+        public string[] SplitContentString(string content)
         {
-            var content = new StreamReader(file.InputStream).ReadToEnd();
-            var lines = content.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            return lines;
+            var splitContent = content.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            return splitContent;
         }
 
         public List<Cursus> ReadAllCursussenFromFileContent()
@@ -88,7 +94,7 @@ namespace backend.HelperClasses
             return cursussen;
         }
 
-        private bool IsNewCursus(List<Cursus> cursussen, Cursus cursus)
+        public bool IsNewCursus(List<Cursus> cursussen, Cursus cursus)
         {
             return !cursussen.Any(c => c.Code == cursus.Code) && !_db.Cursussen.Any(c => c.Code == cursus.Code);
         }
@@ -115,7 +121,7 @@ namespace backend.HelperClasses
             return instanties;
         }
 
-        private bool IsNewInstantie(List<Cursusinstantie> instanties, Cursusinstantie instantie)
+        public bool IsNewInstantie(List<Cursusinstantie> instanties, Cursusinstantie instantie)
         {
             return !instanties.Any(c => c.Cursus.Code == instantie.Cursus.Code && c.Startdatum == instantie.Startdatum) &&
                    !_db.Cursusinstanties.Any(c => c.Cursus.Code == instantie.Cursus.Code && c.Startdatum == instantie.Startdatum);

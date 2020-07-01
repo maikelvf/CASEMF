@@ -120,9 +120,9 @@ namespace backend.Controllers
             base.Dispose(disposing);
         }
 
-        private bool CursusinstantieExists(int id)
-        {
-            return db.Cursusinstanties.Count(e => e.Id == id) > 0;
-        }
+        //private bool CursusinstantieExists(int id)
+        //{
+        //    return db.Cursusinstanties.Count(e => e.Id == id) > 0;
+        //}
     }
 }

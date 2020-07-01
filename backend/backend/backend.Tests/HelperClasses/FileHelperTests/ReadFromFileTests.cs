@@ -57,6 +57,32 @@ namespace backend.Tests.HelperClasses.FileHelperTests
         }
 
         [TestMethod]
+        public void AddCursussenFromFileToDatabase_AddsCursussenToDatabase()
+        {
+            // Methode verwacht een HttpPostedFile. Deze class is sealed en dus erg lastig te mocken.
+            // HttpPostedFileBase lijkt een goede oplossing te zijn, maar HttpPostedFile omzetten naar Base
+            // lijkt mij niet de manier. HttpPostedFileBase binnen krijgen in de post methode lukt ook nog niet
+        }
+
+        [TestMethod]
+        public void SplitContentString_ReturnsSplitStringAsStringArray()
+        {
+            var input = "Titel: Azure Fundamentals\r\nCursuscode: AZF\r\nDuur: 5 dagen\r\nStartdatum: 15/06/2020\r\n\r\n";
+
+            var expectedResult = new string[]
+            {
+                "Titel: Azure Fundamentals",
+                "Cursuscode: AZF",
+                "Duur: 5 dagen",
+                "Startdatum: 15/06/2020"
+            };
+
+            var actualResult = _fileHelper.SplitContentString(input);
+
+            CollectionAssert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
         public void GetCursus_ReturnsNewCursusWithParametersFromFile()
         {
             var expectedResult = new Cursus()
@@ -120,6 +146,68 @@ namespace backend.Tests.HelperClasses.FileHelperTests
             var resultMessage = _fileHelper.ReturnMessage();
 
             Assert.AreEqual(expectedMessage, resultMessage);
+        }
+
+        [TestMethod]
+        public void IsNewCursus_ReturnsTrueIfCursusNotPresentInListOrDatabase()
+        {
+            var cursus = new Cursus() { Code = "BLZ", Duur = 5, Titel = "Blazor" };
+
+            var result = _fileHelper.IsNewCursus(new List<Cursus>(), cursus);
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void IsNewCursus_ReturnsFalseIfCursusPresentInListOrDatabase()
+        {
+            var cursus = new Cursus() { Code = "CNETIN", Duur = 5, Titel = "C# Programmeren" };
+
+            var result = _fileHelper.IsNewCursus(new List<Cursus>(), cursus);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void IsNewInstantie_ReturnsTrueIfInstantieNotPresentInListOrDatabase()
+        {
+            var cursus = new Cursus()
+            {
+                Code = "BLZ",
+                Duur = 5,
+                Titel = "Blazor"
+            };
+
+            var instantie = new Cursusinstantie()
+            {
+                Cursus = cursus,
+                Startdatum = new DateTime(2020, 01, 01)
+            };
+
+            var result = _fileHelper.IsNewInstantie(new List<Cursusinstantie>(), instantie);
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void IsNewInstantie_ReturnsFalseIfInstantiePresentInListOrDatabase()
+        {
+            var cursus = new Cursus()
+            { 
+                Code = "CNETIN",
+                Duur = 5,
+                Titel = "C# Programmeren"
+            };
+
+            var instantie = new Cursusinstantie()
+            {
+                Cursus = cursus,
+                Startdatum = new DateTime(2020, 01, 01)
+            };
+
+            var result = _fileHelper.IsNewInstantie(new List<Cursusinstantie>(), instantie);
+
+            Assert.IsFalse(result);
         }
 
         private static Mock<DbSet<T>> GetMockDbSet<T>(IQueryable<T> entities) where T : class
