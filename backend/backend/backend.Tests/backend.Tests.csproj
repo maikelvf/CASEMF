@@ -117,9 +117,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\CursusinstantieControllerTests.cs" />
-    <Compile Include="Controllers\CursusControllerTests.cs" />
-    <Compile Include="HelperClasses\FileHelperTests\ExtractMethodTests.cs" />
-    <Compile Include="HelperClasses\FileHelperTests\ReadFromFileTests.cs" />
+    <Compile Include="HelperClasses\ExtractMethodTests.cs" />
+    <Compile Include="HelperClasses\ReadFromFileTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

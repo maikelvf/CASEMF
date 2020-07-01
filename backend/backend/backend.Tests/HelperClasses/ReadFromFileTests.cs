@@ -7,8 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Web.Mvc;
 
-namespace backend.Tests.HelperClasses.FileHelperTests
+namespace backend.Tests.HelperClasses
 {
     [TestClass]
     public class ReadFromFileTests
@@ -26,7 +27,7 @@ namespace backend.Tests.HelperClasses.FileHelperTests
                 cursus1,
                 cursus2
             }.AsQueryable();
-            
+
             var mockCursusSet = GetMockDbSet(cursussen);
 
             var instanties = new List<Cursusinstantie>()
@@ -41,9 +42,8 @@ namespace backend.Tests.HelperClasses.FileHelperTests
             var contextMock = new Mock<CursusDBContext>();
             contextMock.Setup(m => m.Cursussen).Returns(mockCursusSet.Object);
             contextMock.Setup(m => m.Cursusinstanties).Returns(mockInstantieSet.Object);
-            _fileHelper = new FileHelper(contextMock.Object);
 
-            _fileHelper.fileContent = new string[]
+            var fileContent = new string[]
             {
                 "Titel: C# Programmeren",
                 "Cursuscode: CNETIN",
@@ -54,6 +54,10 @@ namespace backend.Tests.HelperClasses.FileHelperTests
                 "Duur: 2 dagen",
                 "Startdatum: 05/05/2020"
             };
+
+            _fileHelper = new FileHelper(contextMock.Object, new ExtractHelper(fileContent));
+            _fileHelper.fileContent = fileContent;
+
         }
 
         [TestMethod]
@@ -193,7 +197,7 @@ namespace backend.Tests.HelperClasses.FileHelperTests
         public void IsNewInstantie_ReturnsFalseIfInstantiePresentInListOrDatabase()
         {
             var cursus = new Cursus()
-            { 
+            {
                 Code = "CNETIN",
                 Duur = 5,
                 Titel = "C# Programmeren"

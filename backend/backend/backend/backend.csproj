@@ -180,13 +180,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\CursusController.cs" />
     <Compile Include="Controllers\CursusinstantieController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Data\CursusDBContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HelperClasses\ExtractHelper.cs" />
     <Compile Include="HelperClasses\FileHelper.cs" />
     <Compile Include="Migrations\202006290956195_initialcreate.cs" />
     <Compile Include="Migrations\202006290956195_initialcreate.Designer.cs">

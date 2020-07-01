@@ -2,19 +2,17 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace backend.Tests.HelperClasses.FileHelperTests
+namespace backend.Tests.HelperClasses
 {
     [TestClass]
     public class ExtractMethodTests
     {
-        private static FileHelper _fileHelper;
+        private static ExtractHelper _extract;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
         {
-            _fileHelper = new FileHelper();
-
-            _fileHelper.fileContent = new string[]
+            var fileContent = new string[]
             {
                 "Titel: C# Programmeren",
                 "Cursuscode: CNETIN",
@@ -25,6 +23,8 @@ namespace backend.Tests.HelperClasses.FileHelperTests
                 "Duur: 2 dagen",
                 "Startdatum: 15/10/2018"
             };
+
+            _extract = new ExtractHelper(fileContent);
         }
 
         [TestMethod]
@@ -32,7 +32,7 @@ namespace backend.Tests.HelperClasses.FileHelperTests
         {
             var expectedResult = 2;
 
-            var actualResult = _fileHelper.ExtractDuur(4);
+            var actualResult = _extract.ExtractDuur(4);
 
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -42,7 +42,7 @@ namespace backend.Tests.HelperClasses.FileHelperTests
         {
             var expectedResult = "CNETIN";
 
-            var actualResult = _fileHelper.ExtractCode(0);
+            var actualResult = _extract.ExtractCode(0);
 
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -52,7 +52,7 @@ namespace backend.Tests.HelperClasses.FileHelperTests
         {
             var expectedResult = "Java Persistence API";
 
-            var actualResult = _fileHelper.ExtractTitel(4);
+            var actualResult = _extract.ExtractTitel(4);
 
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -62,7 +62,7 @@ namespace backend.Tests.HelperClasses.FileHelperTests
         {
             var expectedResult = new DateTime(2018, 10, 8);
 
-            var actualResult = _fileHelper.ExtractStartdatum(0);
+            var actualResult = _extract.ExtractStartdatum(0);
 
             Assert.AreEqual(expectedResult, actualResult);
         }

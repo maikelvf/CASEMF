@@ -88,8 +88,15 @@ namespace backend.Controllers
             }
 
             var file = httpRequest.Files[0];
+
+
             var fileHelper = new FileHelper(db);
 
+            //if (!fileHelper.FileIsValid())
+            //{
+
+            //}
+            
             fileHelper.AddCursussenFromFileToDatabase(file);
 
             return Request.CreateResponse(HttpStatusCode.Created, fileHelper.ReturnMessage());
