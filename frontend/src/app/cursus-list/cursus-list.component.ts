@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import CursusService from '../cursus.service';
-import { Cursus } from '../models/cursus';
 import { Cursusinstantie } from '../models/cursusinstantie';
 
 @Component({
@@ -12,17 +11,12 @@ export class CursusListComponent implements OnInit {
 
   columnsToDisplay = ['startdatum', 'duur', 'titel'];
 
-  cursussen: Array<Cursus>;
   cursusinstanties: Array<Cursusinstantie>;
 
   constructor(private cursusService: CursusService) { }
 
   ngOnInit() {
-    this.cursusService.getCursussen().subscribe(data => {
-      this.cursussen = data;
-    });
-
-    this.cursusService.getCursusinstanties().subscribe(data => {
+    this.cursusService.getAll().subscribe(data => {
       this.cursusinstanties = data;
     });
   }

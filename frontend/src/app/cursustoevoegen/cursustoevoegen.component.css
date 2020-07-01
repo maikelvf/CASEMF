@@ -1,3 +1,11 @@
 label {
     padding-right: 10px;
 }
+
+.succesmessage {
+    color: lightgreen;
+}
+
+.errormessage {
+    color: red;
+}

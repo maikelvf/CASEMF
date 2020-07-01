@@ -10,7 +10,9 @@ export class CursustoevoegenComponent implements OnInit {
 
   fileToUpload: File = null;
 
-  public response;
+  succesResponse: String;
+  duplicateCursusResponse: String;
+  duplicateInstantieResponse: String;
 
   constructor(private cursusService : CursusService) { }
 
@@ -24,7 +26,10 @@ export class CursustoevoegenComponent implements OnInit {
       return;
     }
     this.cursusService.postFile(this.fileToUpload).subscribe(data => {
-      this.response = data
+       var response = data.toString().split('.');
+       this.succesResponse = response[0];
+       this.duplicateCursusResponse = response[1];
+       this.duplicateInstantieResponse = response[2];
       }, error => {
         console.log(error);
     });

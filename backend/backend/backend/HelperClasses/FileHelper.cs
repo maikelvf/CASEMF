@@ -10,33 +10,47 @@ namespace backend.HelperClasses
 {
     public class FileHelper
     {
-        private static CursusDBContext _db;
+        private CursusDBContext _db;
 
-        public static string[] fileContent;
+        public string[] fileContent;
 
-        private static int _cursusCount;
-        private static int _cursusinstantieCount;
-        private static int _duplicateCursusCount;
-        private static int _duplicateCursusinstantieCount;
+        private int _cursusCount;
+        private int _cursusinstantieCount;
+        private int _duplicateCursusCount;
+        private int _duplicateCursusinstantieCount;
 
-        public static void AddCursussenFromFileToDatabase(HttpPostedFile file, CursusDBContext db)
+        public FileHelper()
+        {
+        }
+
+        public FileHelper(CursusDBContext db)
         {
             _db = db;
+        }
 
+        public void AddCursussenFromFileToDatabase(HttpPostedFile file)
+        {
             InitializeCount();
 
             fileContent = ReadAllLinesFromFile(file);
 
-            var cursussen = ReadAllCursussenFromFileContent();
-            _db.Cursussen.AddRange(cursussen);
-            _db.SaveChanges();
+            try
+            {
+                var cursussen = ReadAllCursussenFromFileContent();
+                _db.Cursussen.AddRange(cursussen);
+                _db.SaveChanges();
 
-            var instanties = ReadAllInstantiesFromFileContent();
-            _db.Cursusinstanties.AddRange(instanties);
-            _db.SaveChanges();
+                var instanties = ReadAllInstantiesFromFileContent();
+                _db.Cursusinstanties.AddRange(instanties);
+                _db.SaveChanges();
+            }
+            finally
+            {
+                _db.Dispose();
+            }
         }
 
-        private static void InitializeCount()
+        public void InitializeCount()
         {
             _cursusCount = 0;
             _cursusinstantieCount = 0;
@@ -44,14 +58,14 @@ namespace backend.HelperClasses
             _duplicateCursusinstantieCount = 0;
         }
 
-        public static string[] ReadAllLinesFromFile(HttpPostedFile file)
+        public string[] ReadAllLinesFromFile(HttpPostedFile file)
         {
             var content = new StreamReader(file.InputStream).ReadToEnd();
             var lines = content.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
             return lines;
         }
 
-        public static List<Cursus> ReadAllCursussenFromFileContent()
+        public List<Cursus> ReadAllCursussenFromFileContent()
         {
             var cursussen = new List<Cursus>();
 
@@ -74,12 +88,12 @@ namespace backend.HelperClasses
             return cursussen;
         }
 
-        private static bool IsNewCursus(List<Cursus> cursussen, Cursus cursus)
+        private bool IsNewCursus(List<Cursus> cursussen, Cursus cursus)
         {
             return !cursussen.Any(c => c.Code == cursus.Code) && !_db.Cursussen.Any(c => c.Code == cursus.Code);
         }
 
-        public static List<Cursusinstantie> ReadAllInstantiesFromFileContent()
+        public List<Cursusinstantie> ReadAllInstantiesFromFileContent()
         {
             var instanties = new List<Cursusinstantie>();
 
@@ -101,13 +115,13 @@ namespace backend.HelperClasses
             return instanties;
         }
 
-        private static bool IsNewInstantie(List<Cursusinstantie> instanties, Cursusinstantie instantie)
+        private bool IsNewInstantie(List<Cursusinstantie> instanties, Cursusinstantie instantie)
         {
             return !instanties.Any(c => c.Cursus.Code == instantie.Cursus.Code && c.Startdatum == instantie.Startdatum) &&
                    !_db.Cursusinstanties.Any(c => c.Cursus.Code == instantie.Cursus.Code && c.Startdatum == instantie.Startdatum);
         }
 
-        public static Cursus GetCursus(int i)
+        public Cursus GetCursus(int i)
         {
             return new Cursus()
             {
@@ -117,22 +131,22 @@ namespace backend.HelperClasses
             };
         }
 
-        public static int ExtractDuur(int i)
+        public int ExtractDuur(int i)
         {
             return int.Parse(fileContent[i + 2].Substring(6, 1));
         }
 
-        public static string ExtractCode(int i)
+        public string ExtractCode(int i)
         {
             return fileContent[i + 1].Substring(12);
         }
 
-        public static string ExtractTitel(int i)
+        public string ExtractTitel(int i)
         {
             return fileContent[i].Substring(7);
         }
 
-        public static Cursusinstantie GetCursusinstantie(int i)
+        public Cursusinstantie GetCursusinstantie(int i)
         {
             var cursusCode = ExtractCode(i);
 
@@ -143,12 +157,12 @@ namespace backend.HelperClasses
             };
         }
 
-        public static DateTime ExtractStartdatum(int i)
+        public DateTime ExtractStartdatum(int i)
         {
             return DateTime.Parse(fileContent[i + 3].Substring(12));
         }
 
-        public static string ReturnMessage()
+        public string ReturnMessage()
         {
             var message = $"{_cursusCount} nieuwe cursus(sen) toegevoegd, {_cursusinstantieCount} nieuwe instantie(s) toegevoegd.";
 

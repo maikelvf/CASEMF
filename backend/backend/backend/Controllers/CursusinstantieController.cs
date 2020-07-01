@@ -1,17 +1,13 @@
 ﻿using backend.Data;
 using backend.HelperClasses;
 using backend.Models;
-using System;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.Description;
 
 namespace backend.Controllers
 {
@@ -31,7 +27,7 @@ namespace backend.Controllers
         // GET: api/Cursusinstantie
         public IQueryable<Cursusinstantie> GetCursusinstanties()
         {
-            return db.Cursusinstanties.Include(c => c.Cursus);
+            return db.Cursusinstanties.Include(c => c.Cursus).OrderBy(c => c.Startdatum);
         }
 
         //// GET: api/Cursusinstantie/5
@@ -82,7 +78,6 @@ namespace backend.Controllers
         //    return StatusCode(HttpStatusCode.NoContent);
         //}
 
-        [Route("api/toevoegen")]
         [HttpPost]
         public HttpResponseMessage PostCursusinstanties()
         {
@@ -93,10 +88,11 @@ namespace backend.Controllers
             }
 
             var file = httpRequest.Files[0];
+            var fileHelper = new FileHelper(db);
 
-            FileHelper.AddCursussenFromFileToDatabase(file, db);
+            fileHelper.AddCursussenFromFileToDatabase(file);
 
-            return Request.CreateResponse(HttpStatusCode.Created, FileHelper.ReturnMessage());
+            return Request.CreateResponse(HttpStatusCode.Created, fileHelper.ReturnMessage());
         }
 
         //// DELETE: api/Cursusinstantie/5
