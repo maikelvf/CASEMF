@@ -5,7 +5,7 @@ using System;
 namespace backend.Tests.HelperClasses
 {
     [TestClass]
-    public class ExtractMethodTests
+    public class ExtractHelperTests
     {
         private static ExtractHelper _extract;
 

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace backend.HelperClasses
@@ -32,10 +33,70 @@ namespace backend.HelperClasses
             _extract = extract;
         }
 
-        public void AddCursussenFromFileToDatabase(HttpPostedFile file)
+        public string FileIsValid(HttpPostedFile file)
         {
-            InitializeCount();
+            GetContentFromFile(file);
 
+            for (int lineNumber = 0; lineNumber < fileContent.Length - 1; lineNumber++)
+            {
+                Regex reg;
+                
+                switch (lineNumber % 5)
+                {
+                    case 0:
+                        // Regex voor "Titel: <titel>"
+                        reg = new Regex(@"^Titel:\s.+");
+                        if (!reg.IsMatch(fileContent[lineNumber]))
+                        {
+                            return $"Regel {lineNumber + 1} is niet in het juiste formaat, regel {lineNumber + 1} moet Titel zijn met formaat: 'Titel: <titel>'";
+                        }
+                        break;
+
+                    case 1:
+                        // Regex voor "Cursuscode: <code>"
+                        reg = new Regex(@"^Cursuscode:\s.+");
+                        if (!reg.IsMatch(fileContent[lineNumber]))
+                        {
+                            return $"Regel {lineNumber + 1} is niet in het juiste formaat, regel {lineNumber + 1} moet Cursuscode zijn met formaat: 'Cursuscode: <code>'";
+                        }
+                        break;
+
+                    case 2:
+                        // Regex voor "Duur: # dagen"
+                        reg = new Regex(@"^Duur:\s\d\sdagen");
+                        if (!reg.IsMatch(fileContent[lineNumber]))
+                        {
+                            return $"Regel {lineNumber + 1} is niet in het juiste formaat, regel {lineNumber + 1} moet Cursusduur zijn met formaat: 'Duur: # dagen'";
+                        }
+                        break;
+
+                    case 3:
+                        // Regex voor "Startdatum: ##/##/####"
+                        reg = new Regex(@"^Startdatum:\s\d{1,2}\/\d{1,2}\/\d{4}$");
+                        if (!reg.IsMatch(fileContent[lineNumber]))
+                        {
+                            return $"Regel {lineNumber + 1} is niet in het juiste formaat, regel {lineNumber + 1} moet Startdatum zijn met formaat: 'Startdatum: 01/01/2020'";
+                        }
+                        break;
+
+                    case 4:
+                        if (!string.IsNullOrEmpty(fileContent[lineNumber]))
+                        {
+                            return $"Regel {lineNumber + 1} is niet in het juiste formaat: Regel moet een witregel zijn";
+                        }
+                        break;
+
+                    default:
+                        return "Ok";
+                }
+            }
+
+            return "Ok";
+        }
+
+        private void GetContentFromFile(HttpPostedFile file)
+        {
+            // IStream binnen krijgen ipv HttpPostedFile, dan kan vanuit de unit test ook een IStream mee worden gegeven.
             string content;
             using (StreamReader sr = new StreamReader(file.InputStream))
             {
@@ -43,6 +104,12 @@ namespace backend.HelperClasses
             }
 
             fileContent = SplitContentString(content);
+        }
+
+        public void AddCursussenFromFileToDatabase(HttpPostedFile file)
+        {
+            InitializeCount();
+
             _extract = new ExtractHelper(fileContent);
 
             try
@@ -71,7 +138,7 @@ namespace backend.HelperClasses
 
         public string[] SplitContentString(string content)
         {
-            var splitContent = content.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            var splitContent = content.Split(new [] { Environment.NewLine }, StringSplitOptions.None);
             return splitContent;
         }
 
@@ -79,7 +146,7 @@ namespace backend.HelperClasses
         {
             var cursussen = new List<Cursus>();
 
-            for (int i = 0; i < fileContent.Count(); i += 4)
+            for (int i = 0; i < fileContent.Length - 1; i += 5)
             {
                 Cursus cursus = GetCursus(i);
 
@@ -107,7 +174,7 @@ namespace backend.HelperClasses
         {
             var instanties = new List<Cursusinstantie>();
 
-            for (int i = 0; i < fileContent.Count(); i += 4)
+            for (int i = 0; i < fileContent.Length - 1; i += 5)
             {
                 Cursusinstantie instantie = GetCursusinstantie(i);
                 bool newInstantie = IsNewInstantie(instanties, instantie);
@@ -168,5 +235,7 @@ namespace backend.HelperClasses
 
             return message;
         }
+
+
     }
 }

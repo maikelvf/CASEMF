@@ -6,6 +6,10 @@ label {
     color: lightgreen;
 }
 
+.duplicatemessage {
+    color: red;
+}
+
 .errormessage {
     color: red;
 }

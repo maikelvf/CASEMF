@@ -12,7 +12,7 @@ using System.Web.Mvc;
 namespace backend.Tests.HelperClasses
 {
     [TestClass]
-    public class ReadFromFileTests
+    public class FileHelperTests
     {
         private static FileHelper _fileHelper;
 

@@ -11,24 +11,28 @@ namespace backend.HelperClasses
             fileContent = content;
         }
 
-        public int ExtractDuur(int i)
+        public string ExtractTitel(int i)
         {
-            return int.Parse(fileContent[i + 2].Substring(6, 1));
+            var line = fileContent[i];
+            return line.Substring(line.IndexOf(": ") + 2);
         }
 
         public string ExtractCode(int i)
         {
-            return fileContent[i + 1].Substring(12);
+            var line = fileContent[i + 1];
+            return line.Substring(line.IndexOf(": ") + 2);
         }
 
-        public string ExtractTitel(int i)
+        public int ExtractDuur(int i)
         {
-            return fileContent[i].Substring(7);
+            var line = fileContent[i + 2];
+            return int.Parse(line.Substring(line.IndexOf(": ") + 2, 1));
         }
 
         public DateTime ExtractStartdatum(int i)
         {
-            return DateTime.Parse(fileContent[i + 3].Substring(12));
+            var line = fileContent[i + 3];
+            return DateTime.Parse(line.Substring(line.IndexOf(": ") + 2));
         }
     }
 }

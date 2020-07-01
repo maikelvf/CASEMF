@@ -13,6 +13,7 @@ export class CursustoevoegenComponent implements OnInit {
   succesResponse: String;
   duplicateCursusResponse: String;
   duplicateInstantieResponse: String;
+  errorMessage: String;
 
   constructor(private cursusService : CursusService) { }
 
@@ -22,20 +23,29 @@ export class CursustoevoegenComponent implements OnInit {
 
   uploadFile() {
     if (this.fileToUpload == null) {
-      alert('Kies een bestand om te uploaden!');
+      this.errorMessage = 'Kies een bestand om te uploaden!';
       return;
     }
+
+    this.resetMessages();
+
     this.cursusService.postFile(this.fileToUpload).subscribe(data => {
        var response = data.toString().split('.');
        this.succesResponse = response[0];
        this.duplicateCursusResponse = response[1];
        this.duplicateInstantieResponse = response[2];
       }, error => {
-        console.log(error);
+        this.errorMessage = error.error;
     });
+  }
+
+  resetMessages(): void {
+    this.succesResponse = '';
+    this.duplicateCursusResponse = '';
+    this.duplicateInstantieResponse = '';
+    this.errorMessage = '';
   }
 
   ngOnInit(): void {
   }
-
 }
