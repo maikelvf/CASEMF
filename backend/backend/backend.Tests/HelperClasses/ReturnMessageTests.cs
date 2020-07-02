@@ -1,5 +1,4 @@
-﻿using backend.Controllers;
-using backend.Data;
+﻿using backend.Data;
 using backend.HelperClasses;
 using backend.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -9,25 +8,26 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
-namespace backend.Tests.Controllers
+namespace backend.Tests.HelperClasses
 {
     [TestClass]
-    public class CursusinstantieControllerTests
+    public class ReturnMessageTests
     {
-        private static CursusinstantieController _controller;
-        private static Mock<CursusDBContext> _contextMock;
         private static FileHelper _fileHelper;
+        private static Mock<CursusDBContext> _contextMock;
 
-        [ClassInitialize]
-        public static void ClassInitialize(TestContext testContext)
+        [TestInitialize]
+        public void Initialize()
         {
             var cursus1 = new Cursus() { Code = "CNETIN", Duur = 5, Titel = "C# Programmeren" };
             var cursus2 = new Cursus() { Code = "JPA", Duur = 2, Titel = "Java Persistence API" };
+            var cursus3 = new Cursus() { Code = "BLZ", Duur = 5, Titel = "Blazor" };
 
             var cursussen = new List<Cursus>()
             {
                 cursus1,
-                cursus2
+                cursus2,
+                cursus3
             }.AsQueryable();
 
             var mockCursusSet = GetMockDbSet(cursussen);
@@ -40,15 +40,10 @@ namespace backend.Tests.Controllers
             }.AsQueryable();
 
             var mockInstantieSet = GetMockDbSet(instanties);
-            mockInstantieSet.Setup(m => m.Include("Cursus")).Returns(mockInstantieSet.Object);
 
             _contextMock = new Mock<CursusDBContext>();
             _contextMock.Setup(m => m.Cursussen).Returns(mockCursusSet.Object);
             _contextMock.Setup(m => m.Cursusinstanties).Returns(mockInstantieSet.Object);
-
-            _controller = new CursusinstantieController(_contextMock.Object);
-
-            _fileHelper = new FileHelper(_contextMock.Object);
 
             var fileContent = new string[]
             {
@@ -60,26 +55,31 @@ namespace backend.Tests.Controllers
                 "Titel: Java Persistence API",
                 "Cursuscode: JPA",
                 "Duur: 2 dagen",
-                "Startdatum: 05/05/2020"
+                "Startdatum: 05/05/2020",
+                "",
+                "Titel: Blazor",
+                "Cursuscode: BLZ",
+                "Duur: 5 dagen",
+                "Startdatum: 01/01/2020"
             };
 
+            _fileHelper = new FileHelper(_contextMock.Object, new ExtractHelper(fileContent));
             FileHelper.fileContent = fileContent;
         }
 
         [TestMethod]
-        public void GetCursusinstanties_ReturnsAllCursusinstanties()
+        public void ReturnMessage_ReturnsCompleteMessageWhenDuplicatesPresent()
         {
-            var expectedResult = _contextMock.Object.Cursusinstanties.OrderBy(c => c.Startdatum).AsQueryable();
+            _fileHelper.ReadAllCursussenFromFileContent();
+            _fileHelper.ReadAllInstantiesFromFileContent();
 
-            var actualResult = _controller.GetCursusinstanties();
+            var expectedMessage = "0 nieuwe cursus(sen) toegevoegd, 2 nieuwe instantie(s) toegevoegd." +
+                                  " 3 cursus(sen) dubbel, niet toegevoegd." +
+                                  " 1 cursusinstantie(s) dubbel, niet toegevoegd.";
 
-            CollectionAssert.AreEqual(expectedResult.ToList(), actualResult.ToList());
-        }
+            var actualMessage = _fileHelper.ReturnMessage();
 
-        [TestMethod]
-        public void PostCursusinstanties_ReturnsSuccesResponse()
-        {
-            // Post method heeft een HttpContext nodig. Opzoeken hoe te mocken, wellicht later.
+            Assert.AreEqual(expectedMessage, actualMessage);
         }
 
         private static Mock<DbSet<T>> GetMockDbSet<T>(IQueryable<T> entities) where T : class
@@ -88,9 +88,8 @@ namespace backend.Tests.Controllers
             mockSet.As<IQueryable<T>>().Setup(m => m.Provider).Returns(entities.Provider);
             mockSet.As<IQueryable<T>>().Setup(m => m.Expression).Returns(entities.Expression);
             mockSet.As<IQueryable<T>>().Setup(m => m.ElementType).Returns(entities.ElementType);
-            mockSet.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(entities.GetEnumerator());
+            mockSet.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(() => entities.GetEnumerator());
             return mockSet;
         }
     }
 }
-

@@ -18,6 +18,7 @@ namespace backend.Tests.HelperClasses
                 "Cursuscode: CNETIN",
                 "Duur: 5 dagen",
                 "Startdatum: 8/10/2018",
+                "",
                 "Titel: Java Persistence API",
                 "Cursuscode: JPA",
                 "Duur: 2 dagen",
@@ -32,7 +33,7 @@ namespace backend.Tests.HelperClasses
         {
             var expectedResult = 2;
 
-            var actualResult = _extract.ExtractDuur(4);
+            var actualResult = _extract.ExtractDuur(5);
 
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -52,7 +53,7 @@ namespace backend.Tests.HelperClasses
         {
             var expectedResult = "Java Persistence API";
 
-            var actualResult = _extract.ExtractTitel(4);
+            var actualResult = _extract.ExtractTitel(5);
 
             Assert.AreEqual(expectedResult, actualResult);
         }

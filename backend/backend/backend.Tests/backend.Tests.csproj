@@ -119,6 +119,8 @@
     <Compile Include="Controllers\CursusinstantieControllerTests.cs" />
     <Compile Include="HelperClasses\ExtractHelperTests.cs" />
     <Compile Include="HelperClasses\FileHelperTests.cs" />
+    <Compile Include="HelperClasses\ReturnMessageTests.cs" />
+    <Compile Include="HelperClasses\StringExtensionMethodsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

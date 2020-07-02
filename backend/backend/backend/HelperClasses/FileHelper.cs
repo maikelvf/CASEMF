@@ -12,7 +12,7 @@ namespace backend.HelperClasses
 
         private ExtractHelper _extract;
 
-        private static string[] _fileContent;
+        public static string[] fileContent;
 
         private int _cursusCount;
         private int _cursusinstantieCount;
@@ -38,7 +38,7 @@ namespace backend.HelperClasses
                 content = sr.ReadToEnd().SplitContentString();
             }
 
-            _fileContent = content;
+            fileContent = content;
 
             return content;
         }
@@ -47,7 +47,7 @@ namespace backend.HelperClasses
         {
             InitializeCount();
 
-            _extract = new ExtractHelper(_fileContent);
+            _extract = new ExtractHelper(fileContent);
 
             try
             {
@@ -77,7 +77,7 @@ namespace backend.HelperClasses
         {
             var cursussen = new List<Cursus>();
 
-            for (int i = 0; i < _fileContent.Length - 1; i += 5)
+            for (int i = 0; i < fileContent.Length - 1; i += 5)
             {
                 Cursus cursus = GetCursus(i);
 
@@ -105,7 +105,7 @@ namespace backend.HelperClasses
         {
             var instanties = new List<Cursusinstantie>();
 
-            for (int i = 0; i < _fileContent.Length - 1; i += 5)
+            for (int i = 0; i < fileContent.Length - 1; i += 5)
             {
                 Cursusinstantie instantie = GetCursusinstantie(i);
                 bool newInstantie = IsNewInstantie(instanties, instantie);

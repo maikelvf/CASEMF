@@ -6,8 +6,9 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
-using System.Web.Mvc;
+using System.Text;
 
 namespace backend.Tests.HelperClasses
 {
@@ -15,9 +16,10 @@ namespace backend.Tests.HelperClasses
     public class FileHelperTests
     {
         private static FileHelper _fileHelper;
+        private static Mock<CursusDBContext> _contextMock;
 
-        [ClassInitialize]
-        public static void ClassInitialize(TestContext testContext)
+        [TestInitialize]
+        public void Initialize()
         {
             var cursus1 = new Cursus() { Code = "CNETIN", Duur = 5, Titel = "C# Programmeren" };
             var cursus2 = new Cursus() { Code = "JPA", Duur = 2, Titel = "Java Persistence API" };
@@ -39,9 +41,9 @@ namespace backend.Tests.HelperClasses
 
             var mockInstantieSet = GetMockDbSet(instanties);
 
-            var contextMock = new Mock<CursusDBContext>();
-            contextMock.Setup(m => m.Cursussen).Returns(mockCursusSet.Object);
-            contextMock.Setup(m => m.Cursusinstanties).Returns(mockInstantieSet.Object);
+            _contextMock = new Mock<CursusDBContext>();
+            _contextMock.Setup(m => m.Cursussen).Returns(mockCursusSet.Object);
+            _contextMock.Setup(m => m.Cursusinstanties).Returns(mockInstantieSet.Object);
 
             var fileContent = new string[]
             {
@@ -49,41 +51,72 @@ namespace backend.Tests.HelperClasses
                 "Cursuscode: CNETIN",
                 "Duur: 5 dagen",
                 "Startdatum: 8/10/2018",
+                "",
                 "Titel: Java Persistence API",
                 "Cursuscode: JPA",
                 "Duur: 2 dagen",
-                "Startdatum: 05/05/2020"
+                "Startdatum: 05/05/2020",
+                "",
+                "Titel: Blazor",
+                "Cursuscode: BLZ",
+                "Duur: 5 dagen",
+                "Startdatum: 01/01/2020"
             };
 
-            _fileHelper = new FileHelper(contextMock.Object, new ExtractHelper(fileContent));
-            _fileHelper.fileContent = fileContent;
-
+            _fileHelper = new FileHelper(_contextMock.Object, new ExtractHelper(fileContent));
+            FileHelper.fileContent = fileContent;
         }
 
         [TestMethod]
-        public void AddCursussenFromFileToDatabase_AddsCursussenToDatabase()
+        public void GetContentFromFile_ReturnsContentAsStringArray()
         {
-            // Methode verwacht een HttpPostedFile. Deze class is sealed en dus erg lastig te mocken.
-            // HttpPostedFileBase lijkt een goede oplossing te zijn, maar HttpPostedFile omzetten naar Base
-            // lijkt mij niet de manier. HttpPostedFileBase binnen krijgen in de post methode lukt ook nog niet
-        }
-
-        [TestMethod]
-        public void SplitContentString_ReturnsSplitStringAsStringArray()
-        {
-            var input = "Titel: Azure Fundamentals\r\nCursuscode: AZF\r\nDuur: 5 dagen\r\nStartdatum: 15/06/2020\r\n\r\n";
-
+            var inputString = "InputString";
             var expectedResult = new string[]
             {
-                "Titel: Azure Fundamentals",
-                "Cursuscode: AZF",
-                "Duur: 5 dagen",
-                "Startdatum: 15/06/2020"
+                "InputString"
             };
 
-            var actualResult = _fileHelper.SplitContentString(input);
+            using (var fileStream = new MemoryStream(Encoding.UTF8.GetBytes(inputString)))
+            {
+                var actualResult = FileHelper.GetContentFromFile(fileStream);
 
-            CollectionAssert.AreEqual(expectedResult, actualResult);
+                CollectionAssert.AreEqual(expectedResult, actualResult);
+            }
+        }
+
+        //[TestMethod]
+        //public void AddCursussenFromFileToDatabase_AddsCursussenToDatabase()
+        //{
+        //    var input = "Titel: LINQ\r\nCursuscode: LNQ\r\nDuur: 2 dagen\r\nStartdatum: 01/01/2019\r\n\r\n";
+
+        //    using (var fileStream = new MemoryStream(Encoding.UTF8.GetBytes(input)))
+        //    {
+        //        FileHelper.GetContentFromFile(fileStream);
+        //    }
+
+        //    _fileHelper.AddCursussenFromFileToDatabase();
+
+        //    Assert.IsTrue(_contextMock.Object.Cursussen.Any(c => c.Titel == "LINQ" && c.Code == "LNQ" && c.Duur == 2));
+        //}
+
+        [TestMethod]
+        public void ReadAllCursussenFromFileContent_ReturnsListWithNewCursussen()
+        {
+            var expectedResult = new List<Cursus>()
+            {
+                new Cursus()
+                {
+                    Code = "BLZ",
+                    Duur = 5,
+                    Titel = "Blazor"
+                }
+            };
+
+            var actualResult = _fileHelper.ReadAllCursussenFromFileContent();
+
+            Assert.AreEqual(expectedResult[0].Code, actualResult[0].Code);
+            Assert.AreEqual(expectedResult[0].Titel, actualResult[0].Titel);
+            Assert.AreEqual(expectedResult[0].Duur, actualResult[0].Duur);
         }
 
         [TestMethod]
@@ -119,28 +152,13 @@ namespace backend.Tests.HelperClasses
                 Startdatum = new DateTime(2020, 05, 05)
             };
 
-            var actualResult = _fileHelper.GetCursusinstantie(4);
+            var actualResult = _fileHelper.GetCursusinstantie(5);
 
             Assert.AreEqual(expectedResult.Cursus.Code, actualResult.Cursus.Code);
             Assert.AreEqual(expectedResult.Startdatum, actualResult.Startdatum);
         }
 
-        [TestMethod]
-        public void ReturnMessage_ReturnsCompleteMessageWhenDuplicatesPresent()
-        {
-            _fileHelper.ReadAllCursussenFromFileContent();
-            _fileHelper.ReadAllInstantiesFromFileContent();
-
-            var expectedMessage = "0 nieuwe cursus(sen) toegevoegd, 1 nieuwe instantie(s) toegevoegd." +
-                                  " 2 cursus(sen) dubbel, niet toegevoegd." +
-                                  " 1 cursusinstantie(s) dubbel, niet toegevoegd.";
-
-            var actualMessage = _fileHelper.ReturnMessage();
-
-            Assert.AreEqual(expectedMessage, actualMessage);
-        }
-
-        [TestMethod]
+         [TestMethod]
         public void InitializeCount_SetsCountPropertiesToZero()
         {
             var expectedMessage = "0 nieuwe cursus(sen) toegevoegd, 0 nieuwe instantie(s) toegevoegd.";
@@ -155,7 +173,7 @@ namespace backend.Tests.HelperClasses
         [TestMethod]
         public void IsNewCursus_ReturnsTrueIfCursusNotPresentInListOrDatabase()
         {
-            var cursus = new Cursus() { Code = "BLZ", Duur = 5, Titel = "Blazor" };
+            var cursus = new Cursus() { Code = "LNQ", Duur = 2, Titel = "LINQ" };
 
             var result = _fileHelper.IsNewCursus(new List<Cursus>(), cursus);
 
@@ -220,7 +238,7 @@ namespace backend.Tests.HelperClasses
             mockSet.As<IQueryable<T>>().Setup(m => m.Provider).Returns(entities.Provider);
             mockSet.As<IQueryable<T>>().Setup(m => m.Expression).Returns(entities.Expression);
             mockSet.As<IQueryable<T>>().Setup(m => m.ElementType).Returns(entities.ElementType);
-            mockSet.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(entities.GetEnumerator());
+            mockSet.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(() => entities.GetEnumerator());
             return mockSet;
         }
     }
