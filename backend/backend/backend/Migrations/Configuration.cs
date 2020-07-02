@@ -1,13 +1,10 @@
 namespace backend.Migrations
 {
     using backend.Models;
-    using Microsoft.Ajax.Utilities;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<backend.Data.CursusDBContext>
     {
@@ -16,39 +13,60 @@ namespace backend.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(backend.Data.CursusDBContext context)
+        protected override void Seed(Data.CursusDBContext context)
         {
             var cursussen = new List<Cursus>()
             {
-                new Cursus() { Code = "abc", Duur = 2, Titel = "Cursus 10", Cursusinstanties = new Collection<Cursusinstantie>() },
-                new Cursus() { Code = "def", Duur = 5, Titel = "Cursus 20", Cursusinstanties = new Collection<Cursusinstantie>() },
-                new Cursus() { Code = "ghi", Duur = 1, Titel = "Cursus 30", Cursusinstanties = new Collection<Cursusinstantie>() }
+                new Cursus() { Code = "CNETIN", Duur = 5, Titel = "C# Programmeren", Cursusinstanties = new Collection<Cursusinstantie>() },
+                new Cursus() { Code = "JPA", Duur = 2, Titel = "Java Persistence API", Cursusinstanties = new Collection<Cursusinstantie>() },
+                new Cursus() { Code = "BLZ", Duur = 5, Titel = "Blazor", Cursusinstanties = new Collection<Cursusinstantie>() },
+                new Cursus() { Code = "LNQ", Duur = 2, Titel = "LINQ", Cursusinstanties = new Collection<Cursusinstantie>() },
+                new Cursus() { Code = "AZF", Duur = 5, Titel = "Azure Fundamentals", Cursusinstanties = new Collection<Cursusinstantie>() }
             };
 
             var cursusinstanties = new List<Cursusinstantie>()
             {
-                new Cursusinstantie() { Startdatum = new DateTime(2020, 01, 01).Date, Cursus = cursussen[0] },
-                new Cursusinstantie() { Startdatum = new DateTime(2020, 05, 05).Date, Cursus = cursussen[0] },
-                new Cursusinstantie() { Startdatum = new DateTime(2019, 12, 31).Date, Cursus = cursussen[1] },
-                new Cursusinstantie() { Startdatum = new DateTime(2020, 11, 11).Date, Cursus = cursussen[2] }
+                // 2019 week 25 t/m 28
+                new Cursusinstantie() { Startdatum = new DateTime(2019, 06, 29).Date, Cursus = cursussen[0] },
+                new Cursusinstantie() { Startdatum = new DateTime(2019, 07, 06).Date, Cursus = cursussen[0] },
+                new Cursusinstantie() { Startdatum = new DateTime(2019, 07, 14).Date, Cursus = cursussen[1] },
+                new Cursusinstantie() { Startdatum = new DateTime(2019, 07, 06).Date, Cursus = cursussen[2] },
+                new Cursusinstantie() { Startdatum = new DateTime(2019, 07, 01).Date, Cursus = cursussen[3] },
+                new Cursusinstantie() { Startdatum = new DateTime(2019, 06, 22).Date, Cursus = cursussen[3] },
+                new Cursusinstantie() { Startdatum = new DateTime(2019, 06, 29).Date, Cursus = cursussen[4] },
+
+                // 2020 week 26 t/m 29
+                new Cursusinstantie() { Startdatum = new DateTime(2020, 06, 22).Date, Cursus = cursussen[0] },
+                new Cursusinstantie() { Startdatum = new DateTime(2020, 06, 29).Date, Cursus = cursussen[0] },
+                new Cursusinstantie() { Startdatum = new DateTime(2020, 07, 06).Date, Cursus = cursussen[0] },
+                new Cursusinstantie() { Startdatum = new DateTime(2020, 07, 01).Date, Cursus = cursussen[1] },
+                new Cursusinstantie() { Startdatum = new DateTime(2020, 07, 09).Date, Cursus = cursussen[1] },
+                new Cursusinstantie() { Startdatum = new DateTime(2020, 07, 14).Date, Cursus = cursussen[1] },
+                new Cursusinstantie() { Startdatum = new DateTime(2020, 07, 06).Date, Cursus = cursussen[2] },
+                new Cursusinstantie() { Startdatum = new DateTime(2020, 07, 13).Date, Cursus = cursussen[2] },
+                new Cursusinstantie() { Startdatum = new DateTime(2020, 07, 01).Date, Cursus = cursussen[3] },
+                new Cursusinstantie() { Startdatum = new DateTime(2020, 07, 06).Date, Cursus = cursussen[3] },
+                new Cursusinstantie() { Startdatum = new DateTime(2020, 07, 09).Date, Cursus = cursussen[3] },
+                new Cursusinstantie() { Startdatum = new DateTime(2020, 06, 22).Date, Cursus = cursussen[3] },
+                new Cursusinstantie() { Startdatum = new DateTime(2020, 06, 29).Date, Cursus = cursussen[4] },
+                new Cursusinstantie() { Startdatum = new DateTime(2020, 07, 06).Date, Cursus = cursussen[4] },
+
+                // 2021 week 25 t/m 28
+                new Cursusinstantie() { Startdatum = new DateTime(2021, 06, 29).Date, Cursus = cursussen[0] },
+                new Cursusinstantie() { Startdatum = new DateTime(2021, 07, 06).Date, Cursus = cursussen[0] },
+                new Cursusinstantie() { Startdatum = new DateTime(2021, 07, 01).Date, Cursus = cursussen[1] },
+                new Cursusinstantie() { Startdatum = new DateTime(2021, 07, 14).Date, Cursus = cursussen[1] },
+                new Cursusinstantie() { Startdatum = new DateTime(2021, 07, 06).Date, Cursus = cursussen[2] },
+                new Cursusinstantie() { Startdatum = new DateTime(2021, 07, 13).Date, Cursus = cursussen[2] },
+                new Cursusinstantie() { Startdatum = new DateTime(2021, 07, 01).Date, Cursus = cursussen[3] },
+                new Cursusinstantie() { Startdatum = new DateTime(2021, 07, 09).Date, Cursus = cursussen[3] },
+                new Cursusinstantie() { Startdatum = new DateTime(2021, 06, 22).Date, Cursus = cursussen[3] },
+                new Cursusinstantie() { Startdatum = new DateTime(2021, 07, 06).Date, Cursus = cursussen[4] },
             };
 
-            cursussen[0].Cursusinstanties.Add(cursusinstanties[0]);
-            cursussen[0].Cursusinstanties.Add(cursusinstanties[1]);
-            cursussen[1].Cursusinstanties.Add(cursusinstanties[2]);
-            cursussen[2].Cursusinstanties.Add(cursusinstanties[3]);
+            context.Cursussen.AddOrUpdate(cursussen.ToArray());
 
-            context.Cursussen.AddOrUpdate(x => x.Titel,
-                cursussen[0],
-                cursussen[1],
-                cursussen[2]);
-
-            context.Cursusinstanties.AddOrUpdate(x => x.Startdatum,
-                cursusinstanties[0],
-                cursusinstanties[1],
-                cursusinstanties[2],
-                cursusinstanties[3]
-            );
+            context.Cursusinstanties.AddOrUpdate(cursusinstanties.ToArray());
         }
     }
 }

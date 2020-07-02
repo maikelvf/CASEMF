@@ -75,7 +75,7 @@ namespace backend.Tests.Controllers
                 .Where(c => c.Startdatum.GetWeekOfYear() == weeknummer)
                 .OrderBy(c => c.Startdatum).AsQueryable();
 
-            var actualResult = _controller.GetCursusinstanties(27);
+            var actualResult = _controller.GetCursusinstanties(27, 2020);
 
             CollectionAssert.AreEqual(expectedResult.ToList(), actualResult.ToList());
         }

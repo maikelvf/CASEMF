@@ -1,13 +1,16 @@
 <h3>Overzicht</h3>
 
+<button class="arrowButton" id="decreaseButton" (click)="decreaseWeekNumber()"><<</button>
 
 <label>Week:
-    <input class="weekInput" [(ngModel)]="weeknummer" value={{weeknummer}} />
+    <input class="weekInput" [(ngModel)]="week" value={{week}} />
 </label>
 <label>Jaar:
     <input class="weekInput" [(ngModel)]="jaar" value={{jaar}} />
 </label>
 <button (click)="getCursussen()">Ok</button>
+
+<button class="arrowButton" id="increaseButton" (click)="increaseWeekNumber()">>></button>
 
 
 <mat-table [dataSource]="cursusinstanties">

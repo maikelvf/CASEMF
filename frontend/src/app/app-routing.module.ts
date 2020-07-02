@@ -6,7 +6,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 const routes: Routes = [
   { path: 'overzicht', component: CursusListComponent },
-  { path: 'overzicht/:week', component: CursusListComponent },
+  { path: 'overzicht/:jaar/:week', component: CursusListComponent },
   { path: 'toevoegen', component: CursustoevoegenComponent },
   { path: '', redirectTo: '/overzicht', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent}
