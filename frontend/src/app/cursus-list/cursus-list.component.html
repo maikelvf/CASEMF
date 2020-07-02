@@ -30,5 +30,5 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
-    <mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></mat-row>
+    <mat-row class="tableRow" *matRowDef="let myRowData; columns: columnsToDisplay"></mat-row>
 </mat-table>
