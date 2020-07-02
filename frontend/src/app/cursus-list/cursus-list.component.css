@@ -1,4 +1,8 @@
 table {
     width: 100%;
 }
-  
+
+.weekInput {
+    width: 80px;
+    margin-right: 10px;
+}

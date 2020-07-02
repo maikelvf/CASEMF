@@ -25,11 +25,12 @@ namespace backend.Controllers
         }
 
         // GET: api/Cursusinstantie
-        public IQueryable<Cursusinstantie> GetCursusinstanties(int weeknummer)
+        public IQueryable<Cursusinstantie> GetCursusinstanties(int weeknummer, int jaar)
         {
             return db.Cursusinstanties.Include(c => c.Cursus).ToList()
-                .Where(c => c.Startdatum.GetWeekOfYear() == weeknummer).ToList()
-                .OrderBy(c => c.Startdatum).AsQueryable();
+                .Where(c => c.Startdatum.GetWeekOfYear() == weeknummer && c.Startdatum.Year == jaar)
+                .OrderBy(c => c.Startdatum)
+                .AsQueryable();
         }
 
         //// GET: api/Cursusinstantie/5

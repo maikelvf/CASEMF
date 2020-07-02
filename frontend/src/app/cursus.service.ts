@@ -11,8 +11,8 @@ export default class CursusService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(weeknummer): Observable<Array<Cursusinstantie>> {
-    return this.http.get<Array<Cursusinstantie>>(`${this.url}?weeknummer=${weeknummer}`);
+  getAll(weeknummer: number, jaar: number): Observable<Array<Cursusinstantie>> {
+    return this.http.get<Array<Cursusinstantie>>(`${this.url}?weeknummer=${weeknummer}&jaar=${jaar}`);
   }
 
   postFile(fileToUpload: File) {

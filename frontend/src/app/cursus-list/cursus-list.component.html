@@ -1,8 +1,14 @@
 <h3>Overzicht</h3>
 
-<!-- <label>Weeknummer:
-    <input [(ngModel)]="weeknummer" value={{weeknummer}}/>
-</label> -->
+
+<label>Week:
+    <input class="weekInput" [(ngModel)]="weeknummer" value={{weeknummer}} />
+</label>
+<label>Jaar:
+    <input class="weekInput" [(ngModel)]="jaar" value={{jaar}} />
+</label>
+<button (click)="getCursussen()">Ok</button>
+
 
 <mat-table [dataSource]="cursusinstanties">
     <ng-container matColumnDef="startdatum">

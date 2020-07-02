@@ -10,17 +10,21 @@ import { Cursusinstantie } from '../models/cursusinstantie';
 export class CursusListComponent implements OnInit {
 
   columnsToDisplay = ['startdatum', 'duur', 'titel'];
-
   cursusinstanties: Array<Cursusinstantie>;
 
-  // // Huidige week is 27
-  // weeknummer: number = 27;
+  // Huidige week is 27
+  weeknummer: number = 27;
+  jaar: number = 2020;
 
   constructor(private cursusService: CursusService) { }
 
-  ngOnInit() {
-    this.cursusService.getAll(27).subscribe(data => {
+  getCursussen() {
+    this.cursusService.getAll(this.weeknummer, this.jaar).subscribe(data => {
       this.cursusinstanties = data;
     });
+  }
+
+  ngOnInit() {
+    this.getCursussen();
   }
 }
