@@ -1,6 +1,7 @@
 ﻿using backend.Data;
 using backend.HelperClasses;
 using backend.Models;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -24,9 +25,11 @@ namespace backend.Controllers
         }
 
         // GET: api/Cursusinstantie
-        public IQueryable<Cursusinstantie> GetCursusinstanties()
+        public IQueryable<Cursusinstantie> GetCursusinstanties(int weeknummer)
         {
-            return db.Cursusinstanties.Include(c => c.Cursus).OrderBy(c => c.Startdatum);
+            return db.Cursusinstanties.Include(c => c.Cursus).ToList()
+                .Where(c => c.Startdatum.GetWeekOfYear() == weeknummer).ToList()
+                .OrderBy(c => c.Startdatum).AsQueryable();
         }
 
         //// GET: api/Cursusinstantie/5

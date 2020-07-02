@@ -2,14 +2,14 @@ label {
     padding-right: 10px;
 }
 
-.succesmessage {
+#succesmessage {
     color: lightgreen;
 }
 
-.duplicatemessage {
+#duplicatemessage {
     color: red;
 }
 
-.errormessage {
+#errormessage {
     color: red;
 }

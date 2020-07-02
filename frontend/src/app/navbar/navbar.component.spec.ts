@@ -22,4 +22,10 @@ describe('NavbarComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should show navbar links', () => {
+    expect(document.getElementById('cursusadministratie')).toBeTruthy();
+    expect(document.getElementById('overzicht')).toBeTruthy();
+    expect(document.getElementById('toevoegen')).toBeTruthy();
+  })
 });

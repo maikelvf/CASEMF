@@ -1,18 +1,22 @@
 <h3>Overzicht</h3>
 
+<!-- <label>Weeknummer:
+    <input [(ngModel)]="weeknummer" value={{weeknummer}}/>
+</label> -->
+
 <mat-table [dataSource]="cursusinstanties">
     <ng-container matColumnDef="startdatum">
-        <mat-header-cell *matHeaderCellDef> Startdatum </mat-header-cell>
+        <mat-header-cell class="headerCell" *matHeaderCellDef>Startdatum</mat-header-cell>
         <mat-cell *matCellDef="let instantie"> {{instantie.startdatum | date}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="duur">
-        <mat-header-cell *matHeaderCellDef> Duur </mat-header-cell>
+        <mat-header-cell class="headerCell" *matHeaderCellDef>Duur</mat-header-cell>
         <mat-cell *matCellDef="let instantie"> {{instantie.cursus.duur}} dagen</mat-cell>>
     </ng-container>
 
     <ng-container matColumnDef="titel">
-        <mat-header-cell *matHeaderCellDef> Titel </mat-header-cell>
+        <mat-header-cell class="headerCell" *matHeaderCellDef>Titel</mat-header-cell>
         <mat-cell *matCellDef="let instantie"> {{instantie.cursus.titel}} </mat-cell>>
     </ng-container>
 

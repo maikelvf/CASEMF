@@ -69,9 +69,13 @@ namespace backend.Tests.Controllers
         [TestMethod]
         public void GetCursusinstanties_ReturnsAllCursusinstanties()
         {
-            var expectedResult = _contextMock.Object.Cursusinstanties.OrderBy(c => c.Startdatum).AsQueryable();
+            int weeknummer = 27;
 
-            var actualResult = _controller.GetCursusinstanties();
+            var expectedResult = _contextMock.Object.Cursusinstanties
+                .Where(c => c.Startdatum.GetWeekOfYear() == weeknummer)
+                .OrderBy(c => c.Startdatum).AsQueryable();
+
+            var actualResult = _controller.GetCursusinstanties(27);
 
             CollectionAssert.AreEqual(expectedResult.ToList(), actualResult.ToList());
         }

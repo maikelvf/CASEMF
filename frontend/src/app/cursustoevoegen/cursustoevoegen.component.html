@@ -6,17 +6,17 @@
            id="file"
            (change)="handleFileInput($event.target.files)">
 </div>
-<button (click)="uploadFile()">Toevoegen</button>
+<button (click)="uploadFile()" id="submitButton">Toevoegen</button>
 
-<div class="succesmessage">
+<div id="succesmessage">
     <p>{{succesResponse}}</p>
 </div>
 
-<div class="duplicatemessage">
+<div id="duplicatemessage">
     <p>{{duplicateCursusResponse}}</p>
     <p>{{duplicateInstantieResponse}}</p>
 </div>
 
-<div class="errormessage">
+<div id="errormessage">
     <p>{{errorMessage}}</p>
 </div>

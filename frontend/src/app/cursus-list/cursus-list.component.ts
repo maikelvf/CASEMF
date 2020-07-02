@@ -13,10 +13,13 @@ export class CursusListComponent implements OnInit {
 
   cursusinstanties: Array<Cursusinstantie>;
 
+  // // Huidige week is 27
+  // weeknummer: number = 27;
+
   constructor(private cursusService: CursusService) { }
 
   ngOnInit() {
-    this.cursusService.getAll().subscribe(data => {
+    this.cursusService.getAll(27).subscribe(data => {
       this.cursusinstanties = data;
     });
   }

@@ -186,6 +186,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HelperClasses\DateExtensionMethods.cs" />
     <Compile Include="HelperClasses\ExtractHelper.cs" />
     <Compile Include="HelperClasses\FileHelper.cs" />
     <Compile Include="HelperClasses\FileValidationExtensionMethods.cs" />

@@ -11,13 +11,9 @@ export default class CursusService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<Array<Cursusinstantie>> {
-    return this.http.get<Array<Cursusinstantie>>(this.url);
+  getAll(weeknummer): Observable<Array<Cursusinstantie>> {
+    return this.http.get<Array<Cursusinstantie>>(`${this.url}?weeknummer=${weeknummer}`);
   }
-
-  // get(id: string) {
-  //   return this.http.get(`${this.url}/${id}`);
-  // }
 
   postFile(fileToUpload: File) {
     const data: FormData = new FormData();
@@ -25,8 +21,4 @@ export default class CursusService {
 
     return this.http.post(this.url, data);
   }
-
-  // remove(id: number) {
-  //   return this.http.delete(`${this.url}/${id.toString()}`);
-  // }
 }
