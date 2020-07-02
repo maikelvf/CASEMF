@@ -183,6 +183,11 @@
     <Compile Include="Controllers\CursusinstantieController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Data\CursusDBContext.cs" />
+    <Compile Include="Data\resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -230,6 +235,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Data\resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202006290956195_initialcreate.resx">
       <DependentUpon>202006290956195_initialcreate.cs</DependentUpon>
     </EmbeddedResource>

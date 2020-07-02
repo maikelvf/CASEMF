@@ -38,14 +38,14 @@ namespace backend.Controllers
             var httpRequest = HttpContext.Current.Request;
             if (httpRequest.Files.Count < 1)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Er ging iets mis!");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, resources.BadRequestErrorMessage);
             }
 
             var fileStream = httpRequest.Files[0].InputStream;
 
             var fileHelper = new FileHelper(db);
 
-            var validFileMessage = fileStream.FileIsValid();
+            var validFileMessage = fileStream.IsValidFile();
             if (!validFileMessage.Equals("Valid"))
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, validFileMessage);

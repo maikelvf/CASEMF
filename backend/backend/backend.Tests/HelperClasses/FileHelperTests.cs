@@ -84,21 +84,6 @@ namespace backend.Tests.HelperClasses
             }
         }
 
-        //[TestMethod]
-        //public void AddCursussenFromFileToDatabase_AddsCursussenToDatabase()
-        //{
-        //    var input = "Titel: LINQ\r\nCursuscode: LNQ\r\nDuur: 2 dagen\r\nStartdatum: 01/01/2019\r\n\r\n";
-
-        //    using (var fileStream = new MemoryStream(Encoding.UTF8.GetBytes(input)))
-        //    {
-        //        FileHelper.GetContentFromFile(fileStream);
-        //    }
-
-        //    _fileHelper.AddCursussenFromFileToDatabase();
-
-        //    Assert.IsTrue(_contextMock.Object.Cursussen.Any(c => c.Titel == "LINQ" && c.Code == "LNQ" && c.Duur == 2));
-        //}
-
         [TestMethod]
         public void ReadAllCursussenFromFileContent_ReturnsListWithNewCursussen()
         {

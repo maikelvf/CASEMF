@@ -152,16 +152,16 @@ namespace backend.HelperClasses
 
         public string ReturnMessage()
         {
-            var message = $"{_cursusCount} nieuwe cursus(sen) toegevoegd, {_cursusinstantieCount} nieuwe instantie(s) toegevoegd.";
-
+            var message = string.Format(resources.CursussenToegevoegd, _cursusCount, _cursusinstantieCount);
+                
             if (_duplicateCursusCount > 0)
             {
-                message += $" {_duplicateCursusCount} cursus(sen) dubbel, niet toegevoegd.";
+                message += string.Format(resources.DuplicateCursussen, _duplicateCursusCount);
             }
 
             if (_duplicateCursusinstantieCount > 0)
             {
-                message += $" {_duplicateCursusinstantieCount} cursusinstantie(s) dubbel, niet toegevoegd.";
+                message += string.Format(resources.DuplicateInstanties, _duplicateCursusinstantieCount);
             }
 
             return message;

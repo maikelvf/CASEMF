@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using backend.Data;
+using System.IO;
 using System.Text.RegularExpressions;
 
 namespace backend.HelperClasses
@@ -7,7 +8,7 @@ namespace backend.HelperClasses
     {
         private static string[] _fileContent;
 
-        public static string FileIsValid(this Stream file)
+        public static string IsValidFile(this Stream file)
         {
             _fileContent = FileHelper.GetContentFromFile(file);
 
@@ -20,35 +21,35 @@ namespace backend.HelperClasses
                     case 0:
                         if (!line.IsValidTitel())
                         {
-                            return $"Regel {lineNumber + 1} is niet in het juiste formaat, regel {lineNumber + 1} moet Titel zijn met formaat: 'Titel: <titel>'";
+                            return string.Format(resources.InvalidTitel, lineNumber + 1);
                         }
                         break;
 
                     case 1:
                         if (!line.IsValidCode())
                         {
-                            return $"Regel {lineNumber + 1} is niet in het juiste formaat, regel {lineNumber + 1} moet Cursuscode zijn met formaat: 'Cursuscode: <code>'";
+                            return string.Format(resources.InvalidCode, lineNumber + 1);
                         }
                         break;
 
                     case 2:
                         if (!line.IsValidDuur())
                         {
-                            return $"Regel {lineNumber + 1} is niet in het juiste formaat, regel {lineNumber + 1} moet Cursusduur zijn met formaat: 'Duur: # dagen'";
+                            return string.Format(resources.InvalidDuur, lineNumber + 1);
                         }
                         break;
 
                     case 3:
                         if (!line.IsValidStartdatum())
                         {
-                            return $"Regel {lineNumber + 1} is niet in het juiste formaat, regel {lineNumber + 1} moet Startdatum zijn met formaat: 'Startdatum: 01/01/2020'";
+                            return string.Format(resources.InvalidStartdatum, lineNumber + 1);
                         }
                         break;
 
                     case 4:
                         if (!string.IsNullOrEmpty(line))
                         {
-                            return $"Regel {lineNumber + 1} is niet in het juiste formaat: Regel {lineNumber + 1} moet een witregel zijn";
+                            return string.Format(resources.ShouldBeEmptyLine, lineNumber + 1);
                         }
                         break;
 

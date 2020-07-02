@@ -122,3 +122,4 @@ D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend\obj\Debug\backend.csp
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend\obj\Debug\backend.Migrations.foreignkeysadded.resources
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend\obj\Debug\backend.Migrations.navigationproperties.resources
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend\obj\Debug\backend.Migrations.startdatumdatetime.resources
+D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend\obj\Debug\backend.Data.resources.resources

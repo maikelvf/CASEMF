@@ -52,3 +52,5 @@ D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\Entit
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\Moq.xml
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\bin\Debug\System.Threading.Tasks.Extensions.xml
+D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\obj\Debug\backend.Tests.Resources.resources.resources
+D:\Maikel\Traineeship\Final\CASEMF\backend\backend\backend.Tests\obj\Debug\backend.Tests.csproj.GenerateResource.cache
