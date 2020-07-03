@@ -10,9 +10,7 @@ namespace backend.HelperClasses
     {
         private CursusDBContext _db;
 
-        private ExtractHelper _extract;
-
-        public static string[] fileContent;
+        private static string[] _fileContent;
 
         private int _cursusCount;
         private int _cursusinstantieCount;
@@ -24,10 +22,10 @@ namespace backend.HelperClasses
             _db = db;
         }
 
-        public FileHelper(CursusDBContext db, ExtractHelper extract)
+        public FileHelper(CursusDBContext db, string[] fileContent)
         {
             _db = db;
-            _extract = extract;
+            _fileContent = fileContent;
         }
 
         public static string[] GetContentFromFile(Stream file)
@@ -38,7 +36,7 @@ namespace backend.HelperClasses
                 content = sr.ReadToEnd().SplitContentString();
             }
 
-            fileContent = content;
+            _fileContent = content;
 
             return content;
         }
@@ -46,8 +44,6 @@ namespace backend.HelperClasses
         public void AddCursussenFromFileToDatabase()
         {
             InitializeCount();
-
-            _extract = new ExtractHelper(fileContent);
 
             try
             {
@@ -77,7 +73,7 @@ namespace backend.HelperClasses
         {
             var cursussen = new List<Cursus>();
 
-            for (int i = 0; i < fileContent.Length - 1; i += 5)
+            for (int i = 0; i < _fileContent.Length - 1; i += 5)
             {
                 Cursus cursus = GetCursus(i);
 
@@ -105,7 +101,7 @@ namespace backend.HelperClasses
         {
             var instanties = new List<Cursusinstantie>();
 
-            for (int i = 0; i < fileContent.Length - 1; i += 5)
+            for (int i = 0; i < _fileContent.Length - 1; i += 5)
             {
                 Cursusinstantie instantie = GetCursusinstantie(i);
                 bool newInstantie = IsNewInstantie(instanties, instantie);
@@ -133,20 +129,20 @@ namespace backend.HelperClasses
         {
             return new Cursus()
             {
-                Titel = _extract.ExtractTitel(i),
-                Code = _extract.ExtractCode(i),
-                Duur = _extract.ExtractDuur(i)
+                Titel = _fileContent.ExtractTitel(i),
+                Code = _fileContent.ExtractCode(i),
+                Duur = _fileContent.ExtractDuur(i)
             };
         }
 
         public Cursusinstantie GetCursusinstantie(int i)
         {
-            var cursusCode = _extract.ExtractCode(i);
+            var cursusCode = _fileContent.ExtractCode(i);
 
             return new Cursusinstantie()
             {
                 Cursus = _db.Cursussen.Where(c => c.Code == cursusCode).Single(),
-                Startdatum = _extract.ExtractStartdatum(i)
+                Startdatum = _fileContent.ExtractStartdatum(i)
             };
         }
 

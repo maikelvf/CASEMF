@@ -5,14 +5,15 @@ using System;
 namespace backend.Tests.HelperClasses
 {
     [TestClass]
-    public class ExtractHelperTests
+    public class ExtractExtensionMethodsTests
     {
-        private static ExtractHelper _extract;
+
+        private static string[] _fileContent;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
         {
-            var fileContent = new string[]
+            _fileContent = new string[]
             {
                 "Titel: C# Programmeren",
                 "Cursuscode: CNETIN",
@@ -24,8 +25,6 @@ namespace backend.Tests.HelperClasses
                 "Duur: 2 dagen",
                 "Startdatum: 15/10/2018"
             };
-
-            _extract = new ExtractHelper(fileContent);
         }
 
         [TestMethod]
@@ -33,7 +32,7 @@ namespace backend.Tests.HelperClasses
         {
             var expectedResult = 2;
 
-            var actualResult = _extract.ExtractDuur(5);
+            var actualResult = _fileContent.ExtractDuur(5);
 
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -43,7 +42,7 @@ namespace backend.Tests.HelperClasses
         {
             var expectedResult = "CNETIN";
 
-            var actualResult = _extract.ExtractCode(0);
+            var actualResult = _fileContent.ExtractCode(0);
 
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -53,7 +52,7 @@ namespace backend.Tests.HelperClasses
         {
             var expectedResult = "Java Persistence API";
 
-            var actualResult = _extract.ExtractTitel(5);
+            var actualResult = _fileContent.ExtractTitel(5);
 
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -63,7 +62,7 @@ namespace backend.Tests.HelperClasses
         {
             var expectedResult = new DateTime(2018, 10, 8);
 
-            var actualResult = _extract.ExtractStartdatum(0);
+            var actualResult = _fileContent.ExtractStartdatum(0);
 
             Assert.AreEqual(expectedResult, actualResult);
         }

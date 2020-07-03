@@ -48,8 +48,6 @@ namespace backend.Tests.Controllers
 
             _controller = new CursusinstantieController(_contextMock.Object);
 
-            _fileHelper = new FileHelper(_contextMock.Object);
-
             var fileContent = new string[]
             {
                 "Titel: C# Programmeren",
@@ -63,7 +61,7 @@ namespace backend.Tests.Controllers
                 "Startdatum: 05/05/2020"
             };
 
-            FileHelper.fileContent = fileContent;
+            _fileHelper = new FileHelper(_contextMock.Object, fileContent);
         }
 
         [TestMethod]

@@ -118,7 +118,7 @@
   <ItemGroup>
     <Compile Include="Controllers\CursusinstantieControllerTests.cs" />
     <Compile Include="HelperClasses\DateExtensionMethodsTests.cs" />
-    <Compile Include="HelperClasses\ExtractHelperTests.cs" />
+    <Compile Include="HelperClasses\ExtractExtensionMethodsTests.cs" />
     <Compile Include="HelperClasses\FileHelperTests.cs" />
     <Compile Include="HelperClasses\FileValidationExtensionMethodsTests.cs" />
     <Compile Include="HelperClasses\ReturnMessageTests.cs" />

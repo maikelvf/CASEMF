@@ -192,7 +192,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HelperClasses\DateExtensionMethods.cs" />
-    <Compile Include="HelperClasses\ExtractHelper.cs" />
+    <Compile Include="HelperClasses\ExtractExtensionMethods.cs" />
     <Compile Include="HelperClasses\FileHelper.cs" />
     <Compile Include="HelperClasses\FileValidationExtensionMethods.cs" />
     <Compile Include="HelperClasses\StringExtensionMethods.cs" />

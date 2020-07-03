@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import CursusService from '../cursus.service';
 import { Cursusinstantie } from '../models/cursusinstantie';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: 'app-cursus-list',
@@ -16,12 +16,17 @@ export class CursusListComponent implements OnInit {
   week: number = 27;
   jaar: number = 2020;
 
-  constructor(private cursusService: CursusService, private route: ActivatedRoute) { }
+  constructor(private cursusService: CursusService, private route: ActivatedRoute, private router: Router) { }
 
   getCursussen() {
     this.cursusService.getAll(this.week, this.jaar).subscribe(data => {
       this.cursusinstanties = data;
     });
+  }
+
+  changedWeekNumber() {
+    this.router.navigate(['/overzicht', this.jaar, this.week]);
+    this.getCursussen();
   }
 
   increaseWeekNumber() {
@@ -32,7 +37,7 @@ export class CursusListComponent implements OnInit {
     else {
       this.week += 1;
     }
-
+    this.router.navigate(['/overzicht', this.jaar, this.week]);
     this.getCursussen();
   }
 
@@ -45,6 +50,7 @@ export class CursusListComponent implements OnInit {
       this.week -= 1;
     }
 
+    this.router.navigate(['/overzicht', this.jaar, this.week]);
     this.getCursussen();
   }
 

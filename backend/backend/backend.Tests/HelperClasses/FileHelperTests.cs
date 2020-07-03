@@ -63,8 +63,7 @@ namespace backend.Tests.HelperClasses
                 "Startdatum: 01/01/2020"
             };
 
-            _fileHelper = new FileHelper(_contextMock.Object, new ExtractHelper(fileContent));
-            FileHelper.fileContent = fileContent;
+            _fileHelper = new FileHelper(_contextMock.Object, fileContent);
         }
 
         [TestMethod]
