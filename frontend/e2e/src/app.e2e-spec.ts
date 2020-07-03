@@ -1,6 +1,11 @@
 import { AppPage } from './app.po';
 import { browser, logging } from 'protractor';
 
+  // LET OP: Onderstaande testen zijn afhankelijk van de initiële staat van de database. Oftewel:
+  // Backend applicatie moet draaiende zijn, update-database moet zijn gedraaid,
+  // en de gebruiker heeft nog geen nieuwe cursussen toegevoegd of deze testen al eens gedraaid.
+  // In een volgende iteratie van deze tests zou de database gemocked kunnen worden.
+
 describe('workspace-project App', () => {
   let page: AppPage;
 
@@ -13,29 +18,27 @@ describe('workspace-project App', () => {
     expect(page.getTitleText()).toEqual('Cursusadministratie');
   });
 
-
-  // LET OP: Onderstaande test is afhankelijk van de initiële database staat. Oftewel:
-  // Backend applicatie moet draaiende zijn
-  // Frontend applicatie opent bij week 27 jaar 2020, 4 cursussen zijn zichtbaar.
-  // Weeknummer wordt door de test verandert in 28, 6 cursussen zijn zichtbaar.
-  // Weeknummer wordt door de test verander in 26, 2 cursussen zijn zichtbaar.
-  // Zijn er door de gebruiker cursussen toegevoegd dan zal het aantal waarschijnlijk anders zijn.
-
   it('should display correct number of cursussen when switching weeknumbers', () => {
     page.navigateTo();
-    expect(page.getNumberOfCursussen()).toBe(4);
-
-    page.clickIncreaseWeeknumberButton(1);
     expect(page.getNumberOfCursussen()).toBe(6);
 
-    page.clickDecreaseWeeknumberButton(2);
+    page.clickIncreaseWeeknumberButton(1);
     expect(page.getNumberOfCursussen()).toBe(2);
-  })
+
+    page.clickDecreaseWeeknumberButton(2);
+    expect(page.getNumberOfCursussen()).toBe(4);
+  });
+
+  it(`should display succes messages after uploading valid file`, () => {
+    page.navigateToRoute('/toevoegen');
+    page.uploadFile('./testfiles/validFile1.txt');
+    expect(page.succesMessageVisible()).toEqual('1 nieuwe cursus(sen) toegevoegd, 5 nieuwe instantie(s) toegevoegd');
+  });
 
   it(`should display 'no file selected' error when trying to upload with no file selected`, () => {
     page.navigateToRoute('/toevoegen');
     page.clickSubmitButton();
-    expect(page.noFileErrorMessageVisible());
+    expect(page.noFileErrorMessageVisible()).toEqual('Kies een bestand om te uploaden!');
   });
 
   afterEach(async () => {

@@ -13,8 +13,8 @@ export class CursusListComponent implements OnInit {
   columnsToDisplay = ['startdatum', 'duur', 'titel'];
   cursusinstanties: Array<Cursusinstantie>;
 
-  week: number = 27;
-  jaar: number = 2020;
+  week: number;
+  jaar: number;
 
   constructor(private cursusService: CursusService, private route: ActivatedRoute, private router: Router) { }
 

@@ -1,6 +1,5 @@
 import { browser, by, element } from 'protractor';
 import { __values } from 'tslib';
-import { stringify } from 'querystring';
 
 export class AppPage {
   navigateTo(): Promise<unknown> {
@@ -22,7 +21,7 @@ export class AppPage {
   getNumberOfCursussen(): Number {
     var count;
 
-    count = element.all(by.css('.tableRow')).count();
+    count = element.all(by.css('.tableRow')).count().then(value => value);
 
     return count;
   }
@@ -39,11 +38,22 @@ export class AppPage {
     }
   }
 
-  noFileErrorMessageVisible(): string {
-    var text;
+  succesMessageVisible(): Promise<string> {
+    return element(by.id('succesmessage')).getText() as Promise<string>;
+  }
 
-    element(by.id('errormessage')).getText().then(value => { text = value });
+  noFileErrorMessageVisible(): Promise<string> {
+    return element(by.id('errormessage')).getText() as Promise<string>;
+  }
 
-    return text;
+  fileInputElement() {
+    return element(by.id('file'));
+  }
+
+  uploadFile(filePath: string) {
+    const path = require('path');
+    var absolutePath = path.resolve(filePath);
+    this.fileInputElement().sendKeys(absolutePath);
+    this.clickSubmitButton();
   }
 }
