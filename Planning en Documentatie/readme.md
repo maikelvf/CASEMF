@@ -29,7 +29,7 @@
 
 <ul>
 	<li><code>npm install</code></li>
-	<li><code>npm install -g --silent @angular/cli</code></li>
+	<li><code>npm install -g @angular/cli</code></li>
 	<li><code>Set-ExecutionPolicy RemoteSigned</code></li>
 	<li><code>ng serve --open</code></li>
 </ul>
